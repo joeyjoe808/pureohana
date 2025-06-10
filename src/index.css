@@ -1,0 +1,324 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700&display=swap');
+
+/* Custom styles for a more premium and luxurious look */
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  scroll-behavior: smooth;
+  letter-spacing: 0.02em;
+}
+
+/* Improved accessibility focus styles */
+*:focus-visible {
+  @apply outline-none ring-2 ring-yellow-400 ring-offset-2 ring-offset-slate-800;
+}
+
+.hero-content {
+  max-width: 650px;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.minimal-section {
+  padding: 5rem 0;
+}
+
+.grid-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 0.25rem;
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -4px;
+  left: 0;
+  background-color: theme('colors.yellow.400');
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.active-nav::after {
+  width: 100%;
+}
+
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Minimal card design */
+.minimal-card {
+  @apply bg-slate-800/80 rounded-sm overflow-hidden transition-all duration-300;
+}
+
+.minimal-card:hover {
+  @apply transform shadow-xl -translate-y-1;
+}
+
+/* Clean buttons */
+.btn-primary {
+  @apply px-6 py-3 bg-yellow-400 text-slate-900 font-light rounded-sm 
+         hover:bg-yellow-300 transition-colors inline-flex items-center;
+}
+
+.btn-secondary {
+  @apply px-6 py-3 border border-white text-white font-light rounded-sm 
+         hover:bg-white/10 transition-colors inline-flex items-center;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif tracking-tight font-light;
+}
+
+.heading-xl {
+  @apply text-4xl md:text-5xl lg:text-6xl font-serif font-light leading-tight;
+}
+
+.heading-lg {
+  @apply text-3xl md:text-4xl font-serif font-light;
+}
+
+.heading-md {
+  @apply text-2xl md:text-3xl font-serif font-light;
+}
+
+.heading-sm {
+  @apply text-xl font-serif font-light;
+}
+
+.subtitle {
+  @apply text-yellow-400 font-sans tracking-wider text-xs uppercase;
+}
+
+/* Screen height utility */
+.h-screen\/2 {
+  height: 50vh;
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Improved page transitions */
+.page-transition-enter {
+  opacity: 0;
+}
+.page-transition-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+.page-transition-exit {
+  opacity: 1;
+}
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+/* Back to top button */
+.back-to-top {
+  @apply fixed bottom-6 right-6 bg-yellow-400 text-slate-900 p-3 rounded-full shadow-lg z-50 
+         transition-all duration-300 hover:bg-yellow-300 hover:shadow-xl;
+  opacity: 0;
+  transform: translateY(20px);
+  visibility: hidden;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+/* Luxury Elements */
+.font-serif {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.font-sans {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.luxury-border {
+  @apply border-b border-yellow-400/30;
+}
+
+.luxury-gradient {
+  background: linear-gradient(to right, rgba(250, 204, 21, 0.2), transparent);
+}
+
+.luxury-quote {
+  @apply relative pl-6 border-l-2 border-yellow-400 font-serif text-xl font-light italic text-gray-200;
+}
+
+.thin-gold-line {
+  @apply w-10 h-px bg-yellow-400 mx-2 opacity-70;
+}
+
+.gold-accent {
+  @apply text-yellow-400;
+}
+
+.elegant-shadow {
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.3);
+}
+
+/* Animation classes for hero slides */
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 1500ms;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 1500ms;
+}
+
+.slide-up-enter {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.slide-up-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 1500ms, transform 1500ms;
+}
+.slide-up-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slide-up-exit-active {
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: opacity 1500ms, transform 1500ms;
+}
+
+.slide-down-enter {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+.slide-down-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 1500ms, transform 1500ms;
+}
+.slide-down-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slide-down-exit-active {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1500ms, transform 1500ms;
+}
+
+.slide-left-enter {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.slide-left-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 1500ms, transform 1500ms;
+}
+.slide-left-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.slide-left-exit-active {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 1500ms, transform 1500ms;
+}
+
+.slide-right-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+.slide-right-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 1500ms, transform 1500ms;
+}
+.slide-right-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.slide-right-exit-active {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 1500ms, transform 1500ms;
+}
+
+.zoom-in-enter {
+  opacity: 0;
+  transform: scale(0.95);
+}
+.zoom-in-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 1500ms, transform 1500ms;
+}
+.zoom-in-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+.zoom-in-exit-active {
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 1500ms, transform 1500ms;
+}
+
+.zoom-out-enter {
+  opacity: 0;
+  transform: scale(1.05);
+}
+.zoom-out-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 1500ms, transform 1500ms;
+}
+.zoom-out-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+.zoom-out-exit-active {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 1500ms, transform 1500ms;
+}
