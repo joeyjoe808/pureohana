@@ -286,14 +286,14 @@ const HeroSection = () => {
             {!heroSlides[currentSlide].primary_btn_text && !heroSlides[currentSlide].secondary_btn_text && (
               <>
                 <a 
-                  href="mailto:aloha@pureohanatreasures.com?subject=Quick%20Availability%20Check&body=Aloha!%0A%0AAre%20you%20available%20on%20%5BDATE%5D%3F%0A%0AWe%20need%3A%20%5BService%20Type%5D%0ALocation%3A%20%5BWhere%5D%0A%0AThanks!%0A%5BName%5D%20%5BPhone%5D"
+                  href="mailto:pureohanatreasures@gmail.com?subject=Quick%20Availability%20Check&body=Aloha!%0A%0AAre%20you%20available%20on%20%5BDATE%5D%3F%0A%0AWe%20need%3A%20%5BService%20Type%5D%0ALocation%3A%20%5BWhere%5D%0A%0AThanks!%0A%5BName%5D%20%5BPhone%5D"
                   className="btn-primary"
                 >
                   CHECK AVAILABILITY
                   <ChevronRight size={18} className="ml-2" />
                 </a>
                 <a 
-                  href="mailto:aloha@pureohanatreasures.com?subject=Photography%20Inquiry&body=Aloha!%0A%0AI'd%20like%20to%20learn%20more%20about%20your%20photography%20services.%0A%0APlease%20send%20information%20and%20availability!%0A%0AMahalo%2C%0A%5BName%5D%20%5BPhone%5D"
+                  href="mailto:pureohanatreasures@gmail.com?subject=Photography%20Inquiry&body=Aloha!%0A%0AI'd%20like%20to%20learn%20more%20about%20your%20photography%20services.%0A%0APlease%20send%20information%20and%20availability!%0A%0AMahalo%2C%0A%5BName%5D%20%5BPhone%5D"
                   className="btn-secondary"
                 >
                   GET PRICING
