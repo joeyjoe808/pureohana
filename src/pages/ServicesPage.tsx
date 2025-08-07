@@ -130,12 +130,10 @@ const ServicesPage = () => {
                 <h3 className="text-xl font-bold mb-3 text-white">{service.title}</h3>
                 <p className="text-gray-400 mb-6">{service.description}</p>
                 <a 
-                  href="https://pureohanatreasures.as.me/schedule/0caada86"
-                  target="_blank"
-                  rel="noopener noreferrer" 
+                  href="mailto:aloha@pureohanatreasures.com?subject=Photography%20Session%20Inquiry&body=Aloha!%0A%0AI'm%20interested%20in%20booking%20a%20session.%0A%0AService%20Type%3A%20%5BPortrait%2FFilm%2FEvent%2FMemory%5D%0APreferred%20Date%3A%20%0ANumber%20of%20People%3A%20%0A%0AMahalo%2C%0A%5BName%5D%20%5BPhone%5D"
                   className="text-yellow-400 font-medium flex items-center group-hover:text-yellow-300 transition-colors"
                 >
-                  Book a Session
+                  Get Quote
                   <svg className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
@@ -187,12 +185,10 @@ const ServicesPage = () => {
                 </ul>
                 
                 <a 
-                  href="https://pureohanatreasures.as.me/schedule/0caada86"
-                  target="_blank"
-                  rel="noopener noreferrer" 
+                  href="mailto:aloha@pureohanatreasures.com?subject=Photography%20Services%20Inquiry&body=Aloha!%0A%0AI'd%20like%20to%20learn%20more%20about%20your%20services.%0A%0AService%20Interested%20In%3A%20%0APreferred%20Dates%3A%20%0ANumber%20of%20People%3A%20%0ALocation%3A%20%0A%0APlease%20send%20information!%0A%0AMahalo%2C%0A%5BName%5D%20%5BPhone%5D"
                   className="px-6 py-3 bg-yellow-400 text-slate-900 font-semibold rounded hover:bg-yellow-500 transition-colors"
                 >
-                  BOOK NOW
+                  GET PERSONALIZED QUOTE
                 </a>
               </div>
               
