@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
+// import App from './App.tsx';  // Old busy version
+import AppLuxury from './AppLuxury.tsx';  // New luxury minimal version
 import './index.css';
 
 // Apply security measures for the whole app
@@ -30,6 +31,6 @@ enhanceDocumentSecurity();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <AppLuxury />
   </StrictMode>
 );
