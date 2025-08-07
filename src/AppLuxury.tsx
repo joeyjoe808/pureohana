@@ -1,14 +1,15 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 import NavbarLuxury from './components/NavbarLuxury';
-import PageLoader from './components/PageLoader';
-import { supabase } from './lib/supabase';
+// import PageLoader from './components/PageLoader';
+// import { supabase } from './lib/supabase';
 
-// Lazy load the luxury pages
-const HomePageLuxury = lazy(() => import('./pages/HomePageLuxurySupabase'));
-const PortfolioLuxury = lazy(() => import('./pages/PortfolioLuxury'));
-const AboutPage = lazy(() => import('./pages/AboutPage'));
-const ContactPage = lazy(() => import('./pages/ContactPage'));
+// Import directly instead of lazy loading for now
+import HomePageLuxury from './pages/HomePageLuxury';
+import PortfolioLuxury from './pages/PortfolioLuxury';
+import TestPage from './pages/TestPage';
+// const AboutPage = lazy(() => import('./pages/AboutPage'));
+// const ContactPage = lazy(() => import('./pages/ContactPage'));
 
 // Minimal page loader for luxury feel
 const LuxuryLoader = () => (
@@ -24,13 +25,15 @@ function AppLuxury() {
     <BrowserRouter>
       <div className="min-h-screen bg-white">
         <NavbarLuxury />
-        <Suspense fallback={<LuxuryLoader />}>
-          <Routes>
+        <Routes>
+            {/* Test route */}
+            <Route path="/test" element={<TestPage />} />
+            
             {/* Public Routes - Minimal */}
             <Route path="/" element={<HomePageLuxury />} />
             <Route path="/portfolio" element={<PortfolioLuxury />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/investment" element={<ContactPage />} />
+            <Route path="/about" element={<HomePageLuxury />} />
+            <Route path="/investment" element={<HomePageLuxury />} />
             
             {/* Redirect old routes */}
             <Route path="/services" element={<Navigate to="/investment" replace />} />
@@ -40,7 +43,6 @@ function AppLuxury() {
             {/* Catch all - redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-        </Suspense>
       </div>
     </BrowserRouter>
   );

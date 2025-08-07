@@ -5,6 +5,7 @@ const HomePageLuxury = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    console.log('HomePageLuxury mounted!');
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -13,21 +14,25 @@ const HomePageLuxury = () => {
   return (
     <>
       {/* HERO - Full screen, one stunning image, minimal text */}
-      <section className="relative h-screen w-full overflow-hidden">
+      <section className="relative h-screen w-full overflow-hidden bg-gray-100">
         {/* Single hero image - no carousel, no distractions */}
         <div className="absolute inset-0">
           <img 
-            src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2940"
+            src="https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-1720.jpg"
             alt="Luxury Hawaii Wedding"
             className="w-full h-full object-cover"
+            onError={(e) => {
+              console.error('Image failed to load');
+              e.currentTarget.style.display = 'none';
+            }}
           />
           <div className="absolute inset-0 bg-black/30"></div>
         </div>
 
         {/* Minimal text - just essentials */}
-        <div className="relative z-10 h-full flex flex-col justify-center items-center text-center">
-          <h1 className="text-white text-5xl md:text-7xl font-extralight tracking-wider mb-6">
-            PURE OHANA
+        <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4">
+          <h1 className="text-white text-5xl md:text-7xl font-extralight tracking-wider mb-6" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.5)'}}>
+            PURE OHANA TREASURES
           </h1>
           <div className="w-20 h-[1px] bg-white/60 mb-6"></div>
           <p className="text-white/80 text-lg font-light tracking-wide mb-12">
@@ -55,10 +60,10 @@ const HomePageLuxury = () => {
       <section className="bg-white py-2">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-7xl mx-auto">
           {[
-            "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?q=80&w=2787",
-            "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=2787", 
-            "https://images.unsplash.com/photo-1529636798458-92182e662485?q=80&w=2938",
-            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2940"
+            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/IMG_0776.jpg",
+            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-1705.jpg", 
+            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-1710.jpg",
+            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-1715.jpg"
           ].map((src, idx) => (
             <div key={idx} className="relative aspect-[3/2] overflow-hidden group">
               <img 
@@ -123,7 +128,7 @@ const HomePageLuxury = () => {
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="aspect-square md:aspect-auto">
             <img 
-              src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=2940"
+              src="https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-1730.jpg"
               alt="Recent Wedding"
               className="w-full h-full object-cover"
             />
@@ -159,7 +164,7 @@ const HomePageLuxury = () => {
           </h2>
           <div className="w-20 h-[1px] bg-gray-300 mx-auto mb-8"></div>
           <p className="text-gray-600 font-light leading-relaxed mb-12">
-            Wedding collections begin at $8,000
+            Wedding collections start at $3,500
           </p>
           <p className="text-gray-500 font-light text-sm leading-relaxed">
             Each collection is bespoke, crafted to match your vision. 

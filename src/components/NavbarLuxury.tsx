@@ -24,7 +24,7 @@ const NavbarLuxury = () => {
           <Link to="/" className={`text-2xl font-extralight tracking-widest transition-colors ${
             scrolled ? 'text-gray-900' : 'text-white'
           }`}>
-            PURE OHANA
+            PURE OHANA TREASURES
           </Link>
 
           {/* Desktop Menu - Hidden on mobile */}
