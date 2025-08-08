@@ -15,21 +15,21 @@ const PortfolioLuxury = () => {
       id: 2, 
       category: 'weddings',
       image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg',
-      title: 'Sunset Ceremony',
-      location: 'Ko Olina'
+      title: 'Sunset Ohana',
+      location: 'North Shore, Oahu'
     },
     {
       id: 3,
       category: 'portraits',
       image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/Family-About%20.jpg',
       title: 'Family Session',
-      location: 'Kailua'
+      location: 'Oahu'
     },
     {
       id: 4,
       category: 'weddings',
       image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/Recent-Contact%202.jpg',
-      title: 'Garden Wedding',
+      title: 'Elegant Hawaii lifestyle',
       location: 'Maui'
     },
     {
@@ -37,14 +37,14 @@ const PortfolioLuxury = () => {
       category: 'elopements',
       image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/medium-wide-dancing.jpg',
       title: 'Intimate Elopement',
-      location: 'Kauai'
+      location: 'oahu'
     },
     {
       id: 6,
       category: 'portraits',
       image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/rosaries-grad-group.jpg',
       title: 'Graduation Celebration',
-      location: 'North Shore'
+      location: 'University of Hawaii'
     }
   ];
 
