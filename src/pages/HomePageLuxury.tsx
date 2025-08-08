@@ -3,9 +3,18 @@ import { ChevronDown } from 'lucide-react';
 
 const HomePageLuxury = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [heroImageError, setHeroImageError] = useState(false);
 
   useEffect(() => {
     console.log('HomePageLuxury mounted!');
+    console.log('Hero image URL:', "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg");
+    
+    // Test if image loads
+    const img = new Image();
+    img.onload = () => console.log('✅ Hero image loaded successfully!');
+    img.onerror = (e) => console.error('❌ Hero image failed to load:', e);
+    img.src = "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg";
+    
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -16,10 +25,14 @@ const HomePageLuxury = () => {
       {/* HERO - Full screen, one stunning image, minimal text */}
       <section className="relative h-screen w-full overflow-hidden" style={{backgroundColor: '#2c3e50'}}>
         {/* Single hero image - no carousel, no distractions */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900">
+        <div className="absolute inset-0">
           <img 
             src="https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg"
             alt="Luxury Hawaii Wedding"
+            onError={(e) => {
+              console.error('Hero image failed to load:', e);
+              setHeroImageError(true);
+            }}
             className="w-full h-full object-cover opacity-90"
             loading="eager"
           />
@@ -57,10 +70,10 @@ const HomePageLuxury = () => {
       <section className="bg-white py-2">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-7xl mx-auto">
           {[
-            "https://images.pexels.com/photos/1738636/pexels-photo-1738636.jpeg?auto=compress&cs=tinysrgb&w=1920",
-            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/ashley%20looking%20into%20isaiahs%20eyes.jpg", 
-            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/rosaries%20grad%20group.jpg",
-            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/town%20night%20pics-09125.jpg"
+            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/ashley%20looking%20into%20isaiahs%20eyes.jpg",
+            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/rosaries%20grad%20group.jpg", 
+            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/town%20night%20pics-09125.jpg",
+            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg"
           ].map((src, idx) => (
             <div key={idx} className="relative aspect-[3/2] overflow-hidden group">
               <img 

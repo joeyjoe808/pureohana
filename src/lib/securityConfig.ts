@@ -11,7 +11,7 @@ export const securityHeaders = {
     "default-src 'self'; " +
     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com; " +
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-    "img-src 'self' data: https://images.pexels.com https://*.googleusercontent.com https://*.pexels.com; " +
+    "img-src 'self' data: https://images.pexels.com https://*.googleusercontent.com https://*.pexels.com https://ujpvlaaitdudcawgcyik.supabase.co https://*.supabase.co; " +
     "font-src 'self' https://fonts.gstatic.com; " +
     "connect-src 'self' https://*.supabase.co wss://*.supabase.co; " +
     "frame-src 'self' https://www.youtube.com https://www.google.com; " +
