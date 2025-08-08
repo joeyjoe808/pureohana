@@ -46,7 +46,7 @@ const HomePageLuxury = () => {
           </h1>
           <div className="w-20 h-[1px] bg-white/60 mb-6"></div>
           <p className="text-white/80 text-lg font-light tracking-wide mb-12">
-            Hawaii Wedding Photographer • Luxury Cinematography
+            Hawaii Luxury Wedding • Photography & Cinematography
           </p>
           
           {/* Single CTA - no confusion */}
