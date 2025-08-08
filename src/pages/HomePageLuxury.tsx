@@ -97,9 +97,10 @@ const HomePageLuxury = () => {
           </h2>
           <div className="w-20 h-[1px] bg-gray-300 mx-auto mb-8"></div>
           <p className="text-gray-600 font-light leading-relaxed text-lg">
-            For discerning couples & ohanas seeking extraordinary photography 
-            across the Hawaiian islands. We specialize in intimate ceremonies 
-            at exclusive venues, creating heirloom imagery that transcends trends.
+            "For discerning couples & ohanas seeking extraordinary photography across the Hawaiian islands. 
+            We preserve your family's unfolding story, 
+            capturing keepsake memories that deepen in meaning as your ohana grows, 
+            creating heirloom imagery that transcends trends and touches hearts for generations."
           </p>
         </div>
       </section>
