@@ -14,35 +14,35 @@ const PortfolioLuxury = () => {
     {
       id: 2, 
       category: 'weddings',
-      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/wedding%20shot%203.jpg',
+      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg',
       title: 'Sunset Ceremony',
       location: 'Ko Olina'
     },
     {
       id: 3,
       category: 'portraits',
-      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/Family%20About%20.jpg',
+      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/Family-About%20.jpg',
       title: 'Family Session',
       location: 'Kailua'
     },
     {
       id: 4,
       category: 'weddings',
-      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/wedding%20shot%202.jpg',
+      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/Recent-Contact%202.jpg',
       title: 'Garden Wedding',
       location: 'Maui'
     },
     {
       id: 5,
       category: 'elopements',
-      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/medium%20wide%20dancing.jpg',
+      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/medium-wide-dancing.jpg',
       title: 'Intimate Elopement',
       location: 'Kauai'
     },
     {
       id: 6,
       category: 'portraits',
-      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/rosaries%20grad%20group.jpg',
+      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/rosaries-grad-group.jpg',
       title: 'Graduation Celebration',
       location: 'North Shore'
     }
