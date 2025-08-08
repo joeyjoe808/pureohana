@@ -18,7 +18,7 @@ const HomePageLuxury = () => {
         {/* Single hero image - no carousel, no distractions */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900">
           <img 
-            src="https://images.pexels.com/photos/1024969/pexels-photo-1024969.jpeg?auto=compress&cs=tinysrgb&w=1920"
+            src="https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg"
             alt="Luxury Hawaii Wedding"
             className="w-full h-full object-cover opacity-90"
             loading="eager"
@@ -58,9 +58,9 @@ const HomePageLuxury = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-7xl mx-auto">
           {[
             "https://images.pexels.com/photos/1738636/pexels-photo-1738636.jpeg?auto=compress&cs=tinysrgb&w=1920",
-            "https://images.pexels.com/photos/2959192/pexels-photo-2959192.jpeg?auto=compress&cs=tinysrgb&w=1920", 
-            "https://images.pexels.com/photos/1456618/pexels-photo-1456618.jpeg?auto=compress&cs=tinysrgb&w=1920",
-            "https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg?auto=compress&cs=tinysrgb&w=1920"
+            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/ashley%20looking%20into%20isaiahs%20eyes.jpg", 
+            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/rosaries%20grad%20group.jpg",
+            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/town%20night%20pics-09125.jpg"
           ].map((src, idx) => (
             <div key={idx} className="relative aspect-[3/2] overflow-hidden group">
               <img 
