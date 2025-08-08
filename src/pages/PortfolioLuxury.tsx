@@ -21,14 +21,14 @@ const PortfolioLuxury = () => {
     {
       id: 3,
       category: 'portraits',
-      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/Family-About.jpg',
+      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/Family-About%20.jpg',
       title: 'Family Session',
       location: 'Kailua'
     },
     {
       id: 4,
       category: 'weddings',
-      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/Recent-Contact%202.jpg',
+      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/Recent-Contact%203.jpg',
       title: 'Garden Wedding',
       location: 'Maui'
     },
