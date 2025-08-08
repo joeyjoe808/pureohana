@@ -7,43 +7,43 @@ const PortfolioLuxury = () => {
     {
       id: 1,
       category: 'weddings',
-      image: 'https://images.unsplash.com/photo-1606216794074-735e91aa2c92?q=80&w=2787',
-      title: 'Montage Kapalua Bay',
-      location: 'Maui'
+      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/ashley%20looking%20into%20isaiahs%20eyes.jpg',
+      title: 'Island Love Story',
+      location: 'Oahu'
     },
     {
       id: 2, 
       category: 'weddings',
-      image: 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2940',
-      title: 'Four Seasons Oahu',
+      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg',
+      title: 'Sunset Ceremony',
       location: 'Ko Olina'
     },
     {
       id: 3,
       category: 'portraits',
-      image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2940',
-      title: 'Lanikai Beach',
+      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/Family-About.jpg',
+      title: 'Family Session',
       location: 'Kailua'
     },
     {
       id: 4,
       category: 'weddings',
-      image: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=2787',
-      title: 'Haiku Mill',
+      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/Recent-Contact%202.jpg',
+      title: 'Garden Wedding',
       location: 'Maui'
     },
     {
       id: 5,
       category: 'elopements',
-      image: 'https://images.unsplash.com/photo-1529636798458-92182e662485?q=80&w=2938',
-      title: 'Na Pali Coast',
+      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-7287.jpg',
+      title: 'Intimate Elopement',
       location: 'Kauai'
     },
     {
       id: 6,
       category: 'portraits',
-      image: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=2940',
-      title: 'Waimea Valley',
+      image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/rosaries-grad-group.jpg',
+      title: 'Graduation Celebration',
       location: 'North Shore'
     }
   ];
