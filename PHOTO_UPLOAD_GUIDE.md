@@ -1,80 +1,176 @@
-# How to Upload Your Photos to Your Website
+# 📸 PURE OHANA TREASURES - Photo Upload Guide
 
-## Option 1: Quick Manual Upload (Easiest)
+## Quick Start (Admin Panel)
 
-### Step 1: Upload to Supabase Storage
-1. Go to your Supabase dashboard: https://supabase.com/dashboard/project/ujpvlaaitdudcawgcyik/storage/buckets
-2. Click on "pureohanatreasures" bucket (or create it if it doesn't exist)
-3. Click "Upload files" button
-4. Select your wedding photos
-5. Wait for upload to complete
+1. **Access the Admin Panel**
+   - Go to: `http://localhost:5174/admin` (local) or `https://yoursite.com/admin` (live)
+   - Password: `ohana2024`
 
-### Step 2: Get the Public URL
-1. After uploading, click on any photo
-2. Click "Get URL" button
-3. Choose "Public URL"
-4. Copy the URL (it will look like: https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/your-photo.jpg)
+2. **Upload Photos**
+   - Click on any section (Hero, Portfolio, Featured)
+   - Click "Choose File" and select your photo
+   - Photo uploads instantly to Supabase
 
-### Step 3: Update Your Website
-1. Open the file: `/src/pages/HomePageLuxury.tsx`
-2. Find the image sections and replace the URLs:
+---
 
-```javascript
-// Hero image (main background)
-src="YOUR_SUPABASE_URL_HERE"
+## Method 1: Using the Admin Panel (Easiest)
 
-// Portfolio grid (4 images)
-[
-  "YOUR_PHOTO_1_URL",
-  "YOUR_PHOTO_2_URL", 
-  "YOUR_PHOTO_3_URL",
-  "YOUR_PHOTO_4_URL"
-]
+### Step 1: Login to Admin
+```
+URL: yourwebsite.com/admin
+Password: ohana2024
+```
 
-// Featured wedding section
-src="YOUR_FEATURED_PHOTO_URL"
+### Step 2: Choose Section
+- **Hero Section**: Main landing page image
+- **Portfolio Grid**: 4 showcase images
+- **Featured Section**: Recent wedding showcase
+
+### Step 3: Upload
+1. Click "Choose File"
+2. Select your photo (JPG, PNG, WEBP)
+3. Photo uploads automatically
+4. Refresh the main site to see changes
+
+---
+
+## Method 2: Direct Supabase Upload
+
+### Step 1: Login to Supabase
+```
+URL: https://supabase.com/dashboard/project/ujpvlaaitdudcawgcyik/storage/buckets/pureohanatreasures
+```
+
+### Step 2: Upload Files
+1. Click "Upload files" button
+2. Select multiple photos at once
+3. Keep original filenames or rename to:
+   - `hero-main.jpg` (for hero section)
+   - `portfolio-1.jpg`, `portfolio-2.jpg`, etc.
+   - `featured-wedding.jpg`
+
+### Step 3: Get Public URLs
+1. Click on uploaded file
+2. Click "Get URL"
+3. Copy the public URL
+
+---
+
+## Method 3: Bulk Upload via Code
+
+### For Developers: Update Image URLs in Code
+
+1. **Open the homepage file**:
+   ```
+   src/pages/HomePageLuxury.tsx
+   ```
+
+2. **Update Hero Image** (Line 21):
+   ```tsx
+   src="https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/hero-main.jpg"
+   ```
+
+3. **Update Portfolio Grid** (Lines 60-63):
+   ```tsx
+   [
+     "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/portfolio-1.jpg",
+     "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/portfolio-2.jpg",
+     "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/portfolio-3.jpg",
+     "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/portfolio-4.jpg"
+   ]
+   ```
+
+4. **Update Featured Section** (Line 128):
+   ```tsx
+   src="https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/featured-wedding.jpg"
+   ```
+
+---
+
+## 📝 Image Guidelines
+
+### Recommended Sizes
+- **Hero Image**: 1920x1080px (landscape)
+- **Portfolio Images**: 1200x800px (3:2 ratio)
+- **Featured Image**: 1000x1000px (square)
+
+### File Formats
+- **Best**: WEBP (smallest file size)
+- **Good**: JPG/JPEG (universal support)
+- **Okay**: PNG (larger files)
+
+### Optimization Tips
+1. Keep images under 500KB each
+2. Use online compressor: https://tinypng.com
+3. Name files descriptively: `maui-beach-wedding.jpg`
+
+---
+
+## 🚨 Troubleshooting
+
+### Images Not Showing?
+1. Check file extension (use lowercase: `.jpg` not `.JPG`)
+2. Ensure bucket is public in Supabase settings
+3. Clear browser cache (Cmd+Shift+R)
+
+### Upload Failed?
+1. Check file size (max 50MB)
+2. Check internet connection
+3. Try different browser
+
+### Wrong Image Showing?
+1. Clear browser cache
+2. Check filename matches exactly
+3. Wait 30 seconds for CDN to update
+
+---
+
+## 🎯 Quick Commands
+
+### See your site locally:
+```bash
+cd ~/pureohana_website
+npm run dev
+# Open: http://localhost:5174
+```
+
+### Push changes to live site:
+```bash
+git add .
+git commit -m "Updated photos"
+git push
+# Netlify auto-deploys in 2-3 minutes
+```
+
+### Access Supabase Dashboard:
+```
+https://supabase.com/dashboard/project/ujpvlaaitdudcawgcyik
 ```
 
 ---
 
-## Option 2: Automatic Upload System (I'll Build This)
+## 📱 Mobile Upload
 
-I can create a simple admin panel where you can:
-- Drag and drop photos
-- They automatically upload to Supabase
-- Website updates instantly
-- No code editing needed
-
-Would you like me to build this for you?
+1. Email photos to yourself
+2. Open admin panel on phone browser
+3. Upload directly from phone gallery
 
 ---
 
-## Option 3: Use Google Drive/Dropbox (Alternative)
+## 🔐 Security Notes
 
-If Supabase is tricky, you can:
-1. Upload photos to Google Drive
-2. Make them public
-3. Get the direct link
-4. Use those URLs instead
-
----
-
-## Current Image Locations in Your Site:
-
-1. **Hero Background** (main image when you land on site)
-   - Line 21 in HomePageLuxury.tsx
-
-2. **Portfolio Grid** (4 images in grid)
-   - Lines 63-66 in HomePageLuxury.tsx
-
-3. **Featured Wedding** (image with "Four Seasons Maui" text)
-   - Line 127 in HomePageLuxury.tsx
+- Admin password: `ohana2024` (change in `AdminBasic.tsx` line 8)
+- Keep admin URL secret
+- Photos in Supabase are public by default
 
 ---
 
 ## Need Help?
 
-Tell me which option you prefer:
-1. "Help me upload manually" - I'll walk you through it step by step
-2. "Build me an upload system" - I'll create an admin panel
-3. "Use my existing photos" - If you have photos already online somewhere
+1. **Check console**: Right-click → Inspect → Console tab
+2. **Check network**: Network tab shows if images are loading
+3. **Contact support**: Your developer can help debug
+
+---
+
+Last Updated: August 2025

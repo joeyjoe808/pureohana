@@ -18,14 +18,10 @@ const HomePageLuxury = () => {
         {/* Single hero image - no carousel, no distractions */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900">
           <img 
-            src="https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/IMG_0776.JPG"
+            src="https://images.pexels.com/photos/1024969/pexels-photo-1024969.jpeg?auto=compress&cs=tinysrgb&w=1920"
             alt="Luxury Hawaii Wedding"
             className="w-full h-full object-cover opacity-90"
             loading="eager"
-            onError={(e) => {
-              console.error('Image failed to load, trying fallback');
-              e.currentTarget.src = "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-1720.jpg";
-            }}
           />
           <div className="absolute inset-0 bg-black/30"></div>
         </div>
@@ -61,10 +57,10 @@ const HomePageLuxury = () => {
       <section className="bg-white py-2">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-7xl mx-auto">
           {[
-            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/IMG_0843.JPG",
-            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/IMG_0886.JPG", 
-            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/IMG_0776.JPG",
-            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/IMG_0843.JPG"
+            "https://images.pexels.com/photos/1738636/pexels-photo-1738636.jpeg?auto=compress&cs=tinysrgb&w=1920",
+            "https://images.pexels.com/photos/2959192/pexels-photo-2959192.jpeg?auto=compress&cs=tinysrgb&w=1920", 
+            "https://images.pexels.com/photos/1456618/pexels-photo-1456618.jpeg?auto=compress&cs=tinysrgb&w=1920",
+            "https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg?auto=compress&cs=tinysrgb&w=1920"
           ].map((src, idx) => (
             <div key={idx} className="relative aspect-[3/2] overflow-hidden group">
               <img 
@@ -129,7 +125,7 @@ const HomePageLuxury = () => {
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="aspect-square md:aspect-auto">
             <img 
-              src="https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/IMG_0886.JPG"
+              src="https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=1920"
               alt="Recent Wedding"
               className="w-full h-full object-cover"
             />
