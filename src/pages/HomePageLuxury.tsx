@@ -71,8 +71,8 @@ const HomePageLuxury = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-7xl mx-auto">
           {[
             "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/ashley%20looking%20into%20isaiahs%20eyes.jpg",
-            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/rosaries-grad-group.jpg", 
-            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/town-night-pics-09125.jpg",
+            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/rosaries%20grad%20group.jpg", 
+            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/wedding%20shot%203.jpg",
             "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg"
           ].map((src, idx) => (
             <div key={idx} className="relative aspect-[3/2] overflow-hidden group">
@@ -97,7 +97,7 @@ const HomePageLuxury = () => {
           </h2>
           <div className="w-20 h-[1px] bg-gray-300 mx-auto mb-8"></div>
           <p className="text-gray-600 font-light leading-relaxed text-lg">
-            For discerning couples seeking extraordinary photography 
+            For discerning couples & ohanas seeking extraordinary photography 
             across the Hawaiian islands. We specialize in intimate ceremonies 
             at exclusive venues, creating heirloom imagery that transcends trends.
           </p>
