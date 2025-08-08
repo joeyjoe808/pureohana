@@ -72,7 +72,7 @@ const HomePageLuxury = () => {
           {[
             "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/ashley%20looking%20into%20isaiahs%20eyes.jpg",
             "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/rosaries-grad-group.jpg", 
-            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-5857.jpg",
+            "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-03371.jpg",
             "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg"
           ].map((src, idx) => (
             <div key={idx} className="relative aspect-[3/2] overflow-hidden group">
