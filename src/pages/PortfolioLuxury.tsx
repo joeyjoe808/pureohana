@@ -6,14 +6,14 @@ const PortfolioLuxury = () => {
   const portfolioItems = [
     {
       id: 1,
-      category: 'weddings',
+      category: 'treasures',
       image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/ashley%20looking%20into%20isaiahs%20eyes.jpg',
       title: 'Island Love Story',
       location: 'Oahu'
     },
     {
       id: 2, 
-      category: 'weddings',
+      category: 'treasures',
       image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg',
       title: 'Sunset Ohana',
       location: 'North Shore, Oahu'
@@ -27,14 +27,14 @@ const PortfolioLuxury = () => {
     },
     {
       id: 4,
-      category: 'weddings',
+      category: 'treasures',
       image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/Recent-Contact%202.jpg',
       title: 'Elegant Hawaii lifestyle',
       location: 'Downtown Honolulu'
     },
     {
       id: 5,
-      category: 'elopements',
+      category: 'lifestyles',
       image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/medium-wide-dancing.jpg',
       title: 'Intimate Elopement',
       location: 'oahu'
