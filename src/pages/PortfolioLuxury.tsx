@@ -68,7 +68,7 @@ const PortfolioLuxury = () => {
       <section className="pb-12 bg-white">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="flex justify-center space-x-8 md:space-x-12">
-            {['all', 'weddings', 'elopements', 'portraits'].map(category => (
+            {['all', 'treasures', 'lifestyles', 'portraits'].map(category => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
