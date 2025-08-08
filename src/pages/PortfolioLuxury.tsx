@@ -30,7 +30,7 @@ const PortfolioLuxury = () => {
       category: 'weddings',
       image: 'https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/Recent-Contact%202.jpg',
       title: 'Elegant Hawaii lifestyle',
-      location: 'Maui'
+      location: 'Downtown Honolulu'
     },
     {
       id: 5,
