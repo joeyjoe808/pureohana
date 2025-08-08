@@ -52,7 +52,7 @@ const HeroSection = () => {
     },
     {
       id: 2,
-      image_url: "/IMG_8209.jpg",
+      image_url: "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/ashley%20looking%20into%20isaiahs%20eyes.jpg",
       video_url: "",
       subtitle: "HEARTFELT MOMENTS, ISLAND ROOTS",
       title: "CREATING TIMELESS FAMILY TREASURES",
@@ -64,7 +64,7 @@ const HeroSection = () => {
     },
     {
       id: 3,
-      image_url: "https://lh3.googleusercontent.com/pw/ADCreHfQYSBVl5hWYgG5Uz0HUL0a_jnGCDIX-YzPbjywYYQXOEpBfjQ6K46C1XEiGdZaHgD03ErZRZrdymKmGCdvz9YKTnfD-UHfCg-5MwFsSKGl4uj_l2s-hGmr9f1bpZhGKQyDzXVVLJJKPSl1UlmADUdr=w1920",
+      image_url: "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/town-night-pics-09125.jpg",
       video_url: "",
       subtitle: "PURE OHANA MOMENTS",
       title: "PRESERVING YOUR LEGACY ACROSS GENERATIONS",
