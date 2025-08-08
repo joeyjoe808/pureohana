@@ -124,7 +124,7 @@ const PortfolioPage = () => {
       <section className="relative pt-32 pb-20 bg-slate-950">
         <div className="absolute inset-0 z-0 opacity-80">
           <img 
-            src="https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures//untitled-7287.jpg" 
+            src="https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-7287.jpg" 
             alt="Family portrait session" 
             className="w-full h-full object-cover"
           />
