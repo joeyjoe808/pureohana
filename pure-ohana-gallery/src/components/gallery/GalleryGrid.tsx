@@ -2,24 +2,28 @@
 
 import { useState } from 'react'
 import Lightbox from './Lightbox'
+import FavoriteButton from './FavoriteButton'
+import CommentButton from './CommentButton'
+import DownloadButton from './DownloadButton'
 import { Photo } from '@/types/gallery'
 
 interface GalleryGridProps {
   photos: Photo[]
+  galleryId: string
 }
 
-export default function GalleryGrid({ photos }: GalleryGridProps) {
+export default function GalleryGrid({ photos, galleryId }: GalleryGridProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
   return (
     <>
       <div 
         className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 xl:columns-6 gap-1"
-        style={{ columnGap: '4px' }}
+        style={{ columnGap: '4px', columnFill: 'balance' }}
       >
         {photos.map((photo, index) => (
           <div
-            key={photo.id}
+            key={`photo-${photo.id}`}
             className="break-inside-avoid cursor-pointer group mb-1"
             onClick={() => setSelectedIndex(index)}
           >
@@ -30,6 +34,9 @@ export default function GalleryGrid({ photos }: GalleryGridProps) {
                 className="w-full h-auto block"
                 loading="lazy"
               />
+              <DownloadButton photoUrl={photo.original_url} filename={photo.filename} />
+              <FavoriteButton photoId={photo.id} galleryId={galleryId} />
+              <CommentButton photoId={photo.id} galleryId={galleryId} />
             </div>
           </div>
         ))}

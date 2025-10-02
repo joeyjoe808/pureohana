@@ -2,13 +2,14 @@ import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import GalleryGrid from '@/components/gallery/GalleryGrid'
 
-export default async function PublicGalleryPage({ params }: { params: { slug: string } }) {
+export default async function PublicGalleryPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
   const supabase = await createClient()
   
   const { data: gallery } = await supabase
     .from('galleries')
     .select('*')
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .single()
 
   if (!gallery) {
@@ -50,7 +51,7 @@ export default async function PublicGalleryPage({ params }: { params: { slug: st
 
       <div className="max-w-7xl mx-auto px-6 py-12">
         {photos && photos.length > 0 ? (
-          <GalleryGrid photos={photos} />
+          <GalleryGrid photos={photos} galleryId={gallery.id} />
         ) : (
           <div className="text-center py-20">
             <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">

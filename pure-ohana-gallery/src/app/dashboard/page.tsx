@@ -2,6 +2,8 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 
+export const revalidate = 0
+
 export default async function DashboardPage() {
   const supabase = await createClient()
   
@@ -28,6 +30,12 @@ export default async function DashboardPage() {
     .from('photos')
     .select('*', { count: 'exact', head: true })
     .in('gallery_id', galleries?.map(g => g.id) || [])
+
+  const { count: unreadComments } = await supabase
+    .from('comments')
+    .select('*', { count: 'exact', head: true })
+    .in('gallery_id', galleries?.map(g => g.id) || [])
+    .eq('is_read', false)
 
   const handleSignOut = async () => {
     'use server'
@@ -65,7 +73,7 @@ export default async function DashboardPage() {
           <p className="text-gray-500 font-light">Manage your photography galleries</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
           <div className="bg-gray-50 p-8 border border-gray-100">
             <div className="flex items-center justify-between">
               <div>
@@ -110,6 +118,25 @@ export default async function DashboardPage() {
               </div>
             </div>
           </div>
+
+          <Link href="/dashboard/comments" className="bg-blue-50 p-8 border border-blue-200 hover:border-blue-300 transition-colors group">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs text-blue-600 mb-2 uppercase tracking-wider font-medium">Comments</p>
+                <p className="text-4xl font-serif font-light text-gray-900">
+                  {unreadComments || 0}
+                  {unreadComments && unreadComments > 0 ? (
+                    <span className="text-sm text-blue-600 ml-2">unread</span>
+                  ) : null}
+                </p>
+              </div>
+              <div className="w-12 h-12 bg-blue-100 flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+              </div>
+            </div>
+          </Link>
         </div>
 
         <div className="flex justify-between items-center mb-8">

@@ -3,7 +3,8 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import PhotoUploader from '@/components/upload/PhotoUploader'
 
-export default async function GalleryDetailPage({ params }: { params: { id: string } }) {
+export default async function GalleryDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const supabase = await createClient()
   
   const { data: { user } } = await supabase.auth.getUser()
@@ -15,7 +16,7 @@ export default async function GalleryDetailPage({ params }: { params: { id: stri
   const { data: gallery } = await supabase
     .from('galleries')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .eq('photographer_id', user.id)
     .single()
 

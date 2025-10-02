@@ -123,6 +123,102 @@ export interface Database {
           updated_at?: string
         }
       }
+      favorites: {
+        Row: {
+          id: string
+          photo_id: string
+          gallery_id: string
+          client_identifier: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          photo_id: string
+          gallery_id: string
+          client_identifier: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          photo_id?: string
+          gallery_id?: string
+          client_identifier?: string
+          created_at?: string
+        }
+      }
+      comments: {
+        Row: {
+          id: string
+          photo_id: string
+          gallery_id: string
+          client_name: string | null
+          client_email: string | null
+          comment: string
+          is_read: boolean
+          photographer_reply: string | null
+          is_liked: boolean
+          replied_at: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          photo_id: string
+          gallery_id: string
+          client_name?: string | null
+          client_email?: string | null
+          comment: string
+          is_read?: boolean
+          photographer_reply?: string | null
+          is_liked?: boolean
+          replied_at?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          photo_id?: string
+          gallery_id?: string
+          client_name?: string | null
+          client_email?: string | null
+          comment?: string
+          is_read?: boolean
+          photographer_reply?: string | null
+          is_liked?: boolean
+          replied_at?: string | null
+          created_at?: string
+        }
+      }
+      upload_sessions: {
+        Row: {
+          id: string
+          gallery_id: string
+          photographer_id: string
+          total_photos: number
+          completed_photos: number
+          failed_photos: number
+          status: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          gallery_id: string
+          photographer_id: string
+          total_photos: number
+          completed_photos?: number
+          failed_photos?: number
+          status?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          gallery_id?: string
+          photographer_id?: string
+          total_photos?: number
+          completed_photos?: number
+          failed_photos?: number
+          status?: string
+          created_at?: string
+        }
+      }
     }
   }
 }
