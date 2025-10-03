@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
+import ClearCart from './ClearCart'
 
 export default async function OrderSuccessPage({
   searchParams
@@ -35,6 +36,7 @@ export default async function OrderSuccessPage({
 
   return (
     <div className="min-h-screen bg-white">
+      <ClearCart />
       <div className="max-w-3xl mx-auto px-6 py-16">
         {/* Success Icon */}
         <div className="text-center mb-8">

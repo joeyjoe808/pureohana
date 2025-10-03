@@ -7,9 +7,10 @@ interface OrderPrintButtonProps {
   photoId: string
   photoUrl: string
   filename: string
+  galleryId: string
 }
 
-export default function OrderPrintButton({ photoId, photoUrl, filename }: OrderPrintButtonProps) {
+export default function OrderPrintButton({ photoId, photoUrl, filename, galleryId }: OrderPrintButtonProps) {
   const [showSelector, setShowSelector] = useState(false)
 
   return (
@@ -39,6 +40,7 @@ export default function OrderPrintButton({ photoId, photoUrl, filename }: OrderP
           photoId={photoId}
           photoUrl={photoUrl}
           photoFilename={filename}
+          galleryId={galleryId}
           onClose={() => setShowSelector(false)}
         />
       )}

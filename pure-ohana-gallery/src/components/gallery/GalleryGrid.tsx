@@ -35,7 +35,7 @@ export default function GalleryGrid({ photos, galleryId }: GalleryGridProps) {
                 className="w-full h-auto block"
                 loading="lazy"
               />
-              <OrderPrintButton photoId={photo.id} photoUrl={photo.web_url} filename={photo.filename} />
+              <OrderPrintButton photoId={photo.id} photoUrl={photo.web_url} filename={photo.filename} galleryId={galleryId} />
               <DownloadButton photoUrl={photo.original_url} filename={photo.filename} />
               <FavoriteButton photoId={photo.id} galleryId={galleryId} />
               <CommentButton photoId={photo.id} galleryId={galleryId} />

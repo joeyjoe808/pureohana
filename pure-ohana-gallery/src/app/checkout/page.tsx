@@ -3,9 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useCart } from '@/stores/cartStore'
-import { loadStripe } from '@stripe/stripe-js'
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 export default function CheckoutPage() {
   const router = useRouter()
@@ -13,6 +10,7 @@ export default function CheckoutPage() {
   
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [mounted, setMounted] = useState(false)
   
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
@@ -29,12 +27,16 @@ export default function CheckoutPage() {
     country: 'US'
   })
 
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   // Redirect if cart is empty
   useEffect(() => {
-    if (items.length === 0) {
+    if (mounted && items.length === 0) {
       router.push('/')
     }
-  }, [items, router])
+  }, [mounted, items, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -42,9 +44,6 @@ export default function CheckoutPage() {
     setError(null)
 
     try {
-      // Get gallery ID from first item (all items should be from same gallery)
-      const galleryId = items[0]?.photoId ? items[0].photoId.split('-')[0] : null
-
       // Create checkout session
       const response = await fetch('/api/checkout', {
         method: 'POST',
@@ -52,8 +51,7 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           items,
           customerInfo,
-          shippingInfo,
-          galleryId
+          shippingInfo
         })
       })
 
@@ -63,20 +61,14 @@ export default function CheckoutPage() {
         throw new Error(data.error || 'Checkout failed')
       }
 
-      // Redirect to Stripe Checkout
-      const stripe = await stripePromise
-      if (!stripe) throw new Error('Stripe failed to load')
-
-      const { error: stripeError } = await stripe.redirectToCheckout({
-        sessionId: data.sessionId
-      })
-
-      if (stripeError) {
-        throw new Error(stripeError.message)
+      // Redirect to Stripe Checkout using the session URL
+      if (data.sessionUrl) {
+        // DON'T clear cart yet - will clear after successful payment
+        // Redirect to Stripe's hosted checkout page
+        window.location.href = data.sessionUrl
+      } else {
+        throw new Error('No checkout session URL received')
       }
-
-      // Clear cart after successful redirect
-      clearCart()
       
     } catch (err: any) {
       console.error('Checkout error:', err)
@@ -90,8 +82,15 @@ export default function CheckoutPage() {
   const tax = subtotal * 0.0 // Adjust based on your tax rate
   const total = subtotal + shipping + tax
 
-  if (items.length === 0) {
-    return null // Will redirect via useEffect
+  if (!mounted || items.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    )
   }
 
   return (

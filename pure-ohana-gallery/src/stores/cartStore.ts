@@ -11,6 +11,7 @@ export interface CartItem {
   variantId: string
   price: number
   quantity: number
+  galleryId: string
 }
 
 interface CartStore {

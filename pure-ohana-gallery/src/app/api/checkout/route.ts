@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@supabase/supabase-js'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-11-20.acacia'
@@ -8,14 +8,24 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(request: NextRequest) {
   try {
-    const { items, customerInfo, shippingInfo, galleryId } = await request.json()
+    const { items, customerInfo, shippingInfo } = await request.json()
+    
+    console.log('📦 Checkout request received')
+    console.log('Items:', items?.length || 0)
+    console.log('First item:', items?.[0])
+    
+    // Get gallery ID from first item
+    const galleryId = items[0]?.galleryId || null
+    console.log('Gallery ID:', galleryId)
 
     // Validate required fields
     if (!items || items.length === 0) {
+      console.log('❌ Cart is empty')
       return NextResponse.json({ error: 'Cart is empty' }, { status: 400 })
     }
 
     if (!customerInfo || !shippingInfo) {
+      console.log('❌ Customer info missing')
       return NextResponse.json({ error: 'Customer info required' }, { status: 400 })
     }
 
@@ -77,8 +87,24 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Create order in database first
-    const supabase = await createClient()
+    // Create order in database first (using service role to bypass RLS)
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false
+        }
+      }
+    )
+
+    console.log('💾 Creating order in database...')
+    console.log('Order data:', {
+      gallery_id: galleryId,
+      customer_name: customerInfo.name,
+      total: total
+    })
 
     const { data: order, error: orderError } = await supabase
       .from('orders')
@@ -105,7 +131,11 @@ export async function POST(request: NextRequest) {
 
     if (orderError) {
       console.error('Order creation error:', orderError)
-      return NextResponse.json({ error: 'Failed to create order' }, { status: 500 })
+      return NextResponse.json({ 
+        error: 'Failed to create order',
+        details: orderError.message,
+        hint: orderError.hint
+      }, { status: 500 })
     }
 
     // Create order items
@@ -153,8 +183,12 @@ export async function POST(request: NextRequest) {
       .update({ stripe_session_id: session.id })
       .eq('id', order.id)
 
+    console.log('✅ Order created successfully!', order.id)
+    console.log('🔗 Stripe session URL:', session.url)
+
     return NextResponse.json({ 
       sessionId: session.id,
+      sessionUrl: session.url,
       orderId: order.id 
     })
 

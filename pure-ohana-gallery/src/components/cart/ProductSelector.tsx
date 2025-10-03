@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { createClient } from '@/lib/supabase/client'
 import { useCart } from '@/stores/cartStore'
 
@@ -25,13 +26,15 @@ interface ProductSelectorProps {
   photoId: string
   photoUrl: string
   photoFilename: string
+  galleryId: string
   onClose: () => void
 }
 
 export default function ProductSelector({ 
   photoId, 
   photoUrl, 
-  photoFilename, 
+  photoFilename,
+  galleryId,
   onClose 
 }: ProductSelectorProps) {
   const [products, setProducts] = useState<Product[]>([])
@@ -40,12 +43,24 @@ export default function ProductSelector({
   const [variants, setVariants] = useState<ProductVariant[]>([])
   const [quantity, setQuantity] = useState(1)
   const [loading, setLoading] = useState(true)
+  const [mounted, setMounted] = useState(false)
   
   const { addItem } = useCart()
   const supabase = createClient()
 
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
     loadProducts()
+    
+    // Lock body scroll when modal is open
+    document.body.style.overflow = 'hidden'
+    
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
   }, [])
 
   useEffect(() => {
@@ -104,7 +119,8 @@ export default function ProductSelector({
       productSize: variant.size,
       variantId: variant.id,
       price: variant.price,
-      quantity
+      quantity,
+      galleryId
     })
 
     onClose()
@@ -113,24 +129,33 @@ export default function ProductSelector({
   const selectedVariantData = variants.find(v => v.id === selectedVariant)
   const total = selectedVariantData ? selectedVariantData.price * quantity : 0
 
-  return (
-    <div 
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
-      onClick={onClose}
-    >
+  if (!mounted) return null
+
+  const modalContent = (
+    <>
+      {/* Backdrop */}
       <div 
-        className="bg-white max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-        onClick={(e) => e.stopPropagation()}
-      >
+        className="fixed inset-0 bg-black/70 z-[9999]"
+        onClick={onClose}
+      />
+      
+      {/* Modal Container */}
+      <div className="fixed inset-0 z-[9999] overflow-y-auto pointer-events-none">
+        <div className="min-h-full flex items-center justify-center p-4">
+          <div 
+            className="bg-white max-w-3xl w-full shadow-2xl pointer-events-auto relative"
+            onClick={(e) => e.stopPropagation()}
+          >
         {/* Header */}
-        <div className="border-b border-gray-100 p-6">
+        <div className="border-b border-gray-200 p-6 bg-gray-50">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-serif font-light text-gray-900">
+            <h2 className="text-3xl font-serif font-light text-gray-900">
               Order This Photo
             </h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 transition"
+              className="text-gray-400 hover:text-gray-900 transition p-2 hover:bg-gray-100 rounded"
+              aria-label="Close"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -140,43 +165,49 @@ export default function ProductSelector({
         </div>
 
         {/* Photo Preview */}
-        <div className="p-6 border-b border-gray-100">
-          <img 
-            src={photoUrl} 
-            alt={photoFilename}
-            className="w-full h-48 object-contain bg-gray-50"
-          />
-          <p className="text-xs text-gray-500 text-center mt-2">{photoFilename}</p>
+        <div className="p-8 border-b border-gray-200 bg-white">
+          <div className="max-w-md mx-auto">
+            <img 
+              src={photoUrl} 
+              alt={photoFilename}
+              className="w-full h-64 object-contain bg-gray-100 rounded"
+            />
+            <p className="text-sm text-gray-600 text-center mt-3 font-medium">{photoFilename}</p>
+          </div>
         </div>
 
         {/* Product Selection */}
-        <div className="p-6 space-y-6">
+        <div className="p-8 space-y-8 bg-white">
           {loading ? (
-            <p className="text-center text-gray-500">Loading products...</p>
+            <p className="text-center text-gray-500 py-12 text-lg">Loading products...</p>
           ) : products.length === 0 ? (
-            <p className="text-center text-gray-500">No products available</p>
+            <p className="text-center text-gray-500 py-12 text-lg">No products available</p>
           ) : (
             <>
               {/* Product Type */}
               <div>
-                <label className="block text-xs uppercase tracking-wider text-gray-700 mb-3 font-medium">
-                  Product Type
+                <label className="block text-sm uppercase tracking-wider text-gray-700 mb-4 font-semibold">
+                  1. Select Product Type
                 </label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-4">
                   {products.map((product) => (
                     <button
                       key={product.id}
                       onClick={() => setSelectedProduct(product.id)}
-                      className={`p-4 border-2 text-left transition-colors ${
+                      className={`p-5 border-2 text-left transition-all ${
                         selectedProduct === product.id
-                          ? 'border-gray-900 bg-gray-50'
-                          : 'border-gray-200 hover:border-gray-300'
+                          ? 'border-gray-900 bg-gray-900 text-white shadow-lg'
+                          : 'border-gray-300 hover:border-gray-400 hover:shadow-md'
                       }`}
                     >
-                      <div className="font-medium text-sm" style={{ color: '#1a1a1a' }}>
+                      <div className={`font-semibold text-base mb-1 ${
+                        selectedProduct === product.id ? 'text-white' : 'text-gray-900'
+                      }`}>
                         {product.name}
                       </div>
-                      <div className="text-xs text-gray-500 mt-1 capitalize">
+                      <div className={`text-xs capitalize ${
+                        selectedProduct === product.id ? 'text-gray-300' : 'text-gray-500'
+                      }`}>
                         {product.category}
                       </div>
                     </button>
@@ -187,24 +218,28 @@ export default function ProductSelector({
               {/* Size Selection */}
               {selectedProduct && variants.length > 0 && (
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-gray-700 mb-3 font-medium">
-                    Size
+                  <label className="block text-sm uppercase tracking-wider text-gray-700 mb-4 font-semibold">
+                    2. Select Size
                   </label>
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-3 gap-4">
                     {variants.map((variant) => (
                       <button
                         key={variant.id}
                         onClick={() => setSelectedVariant(variant.id)}
-                        className={`p-3 border-2 text-center transition-colors ${
+                        className={`p-4 border-2 text-center transition-all ${
                           selectedVariant === variant.id
-                            ? 'border-gray-900 bg-gray-50'
-                            : 'border-gray-200 hover:border-gray-300'
+                            ? 'border-gray-900 bg-gray-900 text-white shadow-lg'
+                            : 'border-gray-300 hover:border-gray-400 hover:shadow-md'
                         }`}
                       >
-                        <div className="font-medium text-sm" style={{ color: '#1a1a1a' }}>
+                        <div className={`font-semibold text-base mb-1 ${
+                          selectedVariant === variant.id ? 'text-white' : 'text-gray-900'
+                        }`}>
                           {variant.size}
                         </div>
-                        <div className="text-xs text-gray-500 mt-1">
+                        <div className={`text-sm mt-1 ${
+                          selectedVariant === variant.id ? 'text-gray-300' : 'text-gray-600'
+                        }`}>
                           ${variant.price.toFixed(2)}
                         </div>
                       </button>
@@ -216,24 +251,22 @@ export default function ProductSelector({
               {/* Quantity */}
               {selectedVariant && (
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-gray-700 mb-3 font-medium">
-                    Quantity
+                  <label className="block text-sm uppercase tracking-wider text-gray-700 mb-4 font-semibold">
+                    3. Select Quantity
                   </label>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-4">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="w-10 h-10 border border-gray-300 hover:bg-gray-50 transition"
-                      style={{ color: '#1a1a1a' }}
+                      className="w-12 h-12 border-2 border-gray-300 hover:bg-gray-100 hover:border-gray-400 transition-all text-xl font-bold text-gray-700"
                     >
                       −
                     </button>
-                    <span className="text-lg font-medium w-12 text-center" style={{ color: '#1a1a1a' }}>
+                    <span className="text-2xl font-semibold w-16 text-center text-gray-900">
                       {quantity}
                     </span>
                     <button
                       onClick={() => setQuantity(quantity + 1)}
-                      className="w-10 h-10 border border-gray-300 hover:bg-gray-50 transition"
-                      style={{ color: '#1a1a1a' }}
+                      className="w-12 h-12 border-2 border-gray-300 hover:bg-gray-100 hover:border-gray-400 transition-all text-xl font-bold text-gray-700"
                     >
                       +
                     </button>
@@ -243,10 +276,12 @@ export default function ProductSelector({
 
               {/* Total */}
               {selectedVariant && (
-                <div className="pt-4 border-t border-gray-200">
-                  <div className="flex items-center justify-between text-lg">
-                    <span className="font-medium" style={{ color: '#1a1a1a' }}>Total:</span>
-                    <span className="font-serif text-2xl" style={{ color: '#1a1a1a' }}>
+                <div className="pt-6 border-t-2 border-gray-300 bg-gray-50 -mx-8 px-8 py-6">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xl font-semibold text-gray-700 uppercase tracking-wide">
+                      Total:
+                    </span>
+                    <span className="font-serif text-4xl font-bold text-gray-900">
                       ${total.toFixed(2)}
                     </span>
                   </div>
@@ -257,24 +292,26 @@ export default function ProductSelector({
         </div>
 
         {/* Actions */}
-        <div className="border-t border-gray-100 p-6 flex gap-3">
+        <div className="border-t-2 border-gray-200 p-6 bg-gray-50 flex gap-4">
           <button
             onClick={onClose}
-            className="flex-1 bg-white border border-gray-300 px-6 py-3 hover:bg-gray-50 transition font-medium uppercase tracking-wider text-xs"
-            style={{ color: '#1a1a1a' }}
+            className="flex-1 bg-white border-2 border-gray-400 px-6 py-4 hover:bg-gray-100 hover:border-gray-500 transition-all font-semibold uppercase tracking-wider text-sm text-gray-700"
           >
             Cancel
           </button>
           <button
             onClick={handleAddToCart}
             disabled={!selectedProduct || !selectedVariant || loading}
-            className="flex-1 bg-gray-900 px-6 py-3 hover:bg-gray-800 transition disabled:opacity-50 disabled:cursor-not-allowed font-medium uppercase tracking-wider text-xs"
-            style={{ color: '#ffffff' }}
+            className="flex-1 bg-gray-900 px-6 py-4 hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-bold uppercase tracking-wider text-sm shadow-lg hover:shadow-xl text-white"
           >
-            Add to Cart
+            {loading ? 'Adding...' : 'Add to Cart'}
           </button>
         </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   )
+
+  return createPortal(modalContent, document.body)
 }
