@@ -5,6 +5,7 @@ import Lightbox from './Lightbox'
 import FavoriteButton from './FavoriteButton'
 import CommentButton from './CommentButton'
 import DownloadButton from './DownloadButton'
+import OrderPrintButton from './OrderPrintButton'
 import { Photo } from '@/types/gallery'
 
 interface GalleryGridProps {
@@ -34,6 +35,7 @@ export default function GalleryGrid({ photos, galleryId }: GalleryGridProps) {
                 className="w-full h-auto block"
                 loading="lazy"
               />
+              <OrderPrintButton photoId={photo.id} photoUrl={photo.web_url} filename={photo.filename} />
               <DownloadButton photoUrl={photo.original_url} filename={photo.filename} />
               <FavoriteButton photoId={photo.id} galleryId={galleryId} />
               <CommentButton photoId={photo.id} galleryId={galleryId} />

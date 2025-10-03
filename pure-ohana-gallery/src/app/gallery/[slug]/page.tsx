@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import GalleryGrid from '@/components/gallery/GalleryGrid'
+import GalleryHeader from '@/components/gallery/GalleryHeader'
 
 export default async function PublicGalleryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -29,25 +30,12 @@ export default async function PublicGalleryPage({ params }: { params: Promise<{ 
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 py-12 md:py-16">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-serif font-light text-gray-900 mb-4 tracking-tight">
-              {gallery.title}
-            </h1>
-            {gallery.description && (
-              <p className="text-lg text-gray-500 mb-6 font-light">
-                {gallery.description}
-              </p>
-            )}
-            <div className="flex items-center justify-center gap-8 text-xs uppercase tracking-wider text-gray-400">
-              <span>{photos?.length || 0} Photos</span>
-              <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-              <span>{gallery.view_count || 0} Views</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <GalleryHeader
+        title={gallery.title}
+        description={gallery.description}
+        photoCount={photos?.length || 0}
+        viewCount={gallery.view_count || 0}
+      />
 
       <div className="max-w-7xl mx-auto px-6 py-12">
         {photos && photos.length > 0 ? (
