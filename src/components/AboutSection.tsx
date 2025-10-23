@@ -34,32 +34,32 @@ const AboutSection = () => {
           <div className="order-1 lg:order-2 grid grid-cols-12 gap-2">
             <div className="col-span-5 space-y-2">
               <div className="overflow-hidden">
-                <img 
-                  src="https://images.pexels.com/photos/1589825/pexels-photo-1589825.jpeg?auto=compress&cs=tinysrgb&w=600" 
-                  alt="Luxury wedding couple" 
+                <img
+                  src="/untitled-5774.jpg"
+                  alt="Pure Ohana Photography"
                   className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="overflow-hidden">
-                <img 
-                  src="https://images.pexels.com/photos/2253867/pexels-photo-2253867.jpeg?auto=compress&cs=tinysrgb&w=600" 
-                  alt="Hawaii luxury resort" 
+                <img
+                  src="/town night pics 2-08947.jpg"
+                  alt="Night Photography"
                   className="w-full h-40 object-cover hover:scale-105 transition-transform duration-500"
                 />
               </div>
             </div>
             <div className="col-span-7 space-y-2 pt-10">
               <div className="overflow-hidden">
-                <img 
-                  src="https://images.pexels.com/photos/1701304/pexels-photo-1701304.jpeg?auto=compress&cs=tinysrgb&w=600" 
-                  alt="Close-up of groom placing ring on bride's finger" 
+                <img
+                  src="/untitled-03371.jpg"
+                  alt="Creative Portrait Photography"
                   className="w-full h-40 object-cover hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="overflow-hidden relative group">
-                <img 
-                  src="https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=600" 
-                  alt="Elegant wedding ceremony" 
+                <img
+                  src="/downtown lights.jpg"
+                  alt="Downtown Photography"
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-slate-900/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">

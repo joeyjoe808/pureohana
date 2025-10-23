@@ -86,9 +86,9 @@ const AboutPage = () => {
             
             <motion.div variants={itemVariants} className="order-1 lg:order-2">
               <div className="relative">
-                <img 
-                  src="https://images.pexels.com/photos/3062541/pexels-photo-3062541.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                  alt="Our team" 
+                <img
+                  src="/untitled-5857.jpg"
+                  alt="Our team"
                   className="w-full h-auto rounded-lg shadow-xl"
                 />
                 <div className="absolute -bottom-10 -left-10 bg-slate-800 p-6 rounded-lg shadow-lg hidden md:block">

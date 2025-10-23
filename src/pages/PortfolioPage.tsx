@@ -21,76 +21,76 @@ const PortfolioPage = () => {
   };
 
   const projects = [
-    { 
-      id: "dQw4w9WgXcQ", 
-      title: "Sunset Beach Family Session", 
+    {
+      id: "dQw4w9WgXcQ",
+      title: "Downtown City Lights",
       category: "portraits",
-      thumbnail: "https://images.pexels.com/photos/3932951/pexels-photo-3932951.jpeg?auto=compress&cs=tinysrgb&w=800",
-      client: "The Johnson Family",
+      thumbnail: "/downtown lights.jpg",
+      client: "Pure Ohana Treasures",
       year: "2023"
     },
-    { 
-      id: "dQw4w9WgXcQ", 
-      title: "Kona Family Adventure Film", 
+    {
+      id: "dQw4w9WgXcQ",
+      title: "Town Night Scenes",
       category: "video",
-      thumbnail: "https://images.pexels.com/photos/5486845/pexels-photo-5486845.jpeg?auto=compress&cs=tinysrgb&w=800",
-      client: "The Rodriguez Family",
+      thumbnail: "/town night pics-08995.jpg",
+      client: "Pure Ohana Treasures",
       year: "2023"
     },
-    { 
-      id: "dQw4w9WgXcQ", 
-      title: "Lei Day Graduation Ceremony", 
+    {
+      id: "dQw4w9WgXcQ",
+      title: "Evening Town Photography",
       category: "events",
-      thumbnail: "https://images.pexels.com/photos/3819966/pexels-photo-3819966.jpeg?auto=compress&cs=tinysrgb&w=800",
-      client: "Makaio Family",
+      thumbnail: "/town night pics 2-08947.jpg",
+      client: "Pure Ohana Treasures",
       year: "2023"
     },
-    { 
-      id: "dQw4w9WgXcQ", 
-      title: "Multi-Generation Beach Portraits", 
+    {
+      id: "dQw4w9WgXcQ",
+      title: "Night Urban Portraits",
       category: "portraits",
-      thumbnail: "https://lh3.googleusercontent.com/pw/ADCreHfQYSBVl5hWYgG5Uz0HUL0a_jnGCDIX-YzPbjywYYQXOEpBfjQ6K46C1XEiGdZaHgD03ErZRZrdymKmGCdvz9YKTnfD-UHfCg-5MwFsSKGl4uj_l2s-hGmr9f1bpZhGKQyDzXVVLJJKPSl1UlmADUdr=w1920-h1080",
-      client: "The Kahale Ohana",
+      thumbnail: "/town night pics-09125.jpg",
+      client: "Pure Ohana Treasures",
       year: "2023"
     },
-    { 
-      id: "dQw4w9WgXcQ", 
-      title: "Children's Island Adventure Film", 
+    {
+      id: "dQw4w9WgXcQ",
+      title: "Family Moments Film",
       category: "video",
-      thumbnail: "https://images.pexels.com/photos/1000445/pexels-photo-1000445.jpeg?auto=compress&cs=tinysrgb&w=800",
-      client: "The Wilson Family",
+      thumbnail: "/IMG_8175.jpg",
+      client: "Pure Ohana Treasures",
       year: "2022"
     },
-    { 
-      id: "dQw4w9WgXcQ", 
-      title: "Traditional Luau Celebration", 
+    {
+      id: "dQw4w9WgXcQ",
+      title: "Special Celebration",
       category: "events",
-      thumbnail: "https://images.pexels.com/photos/3771836/pexels-photo-3771836.jpeg?auto=compress&cs=tinysrgb&w=800",
-      client: "The Kapule Family",
+      thumbnail: "/IMG_8209.jpg",
+      client: "Pure Ohana Treasures",
       year: "2022"
     },
-    { 
-      id: "dQw4w9WgXcQ", 
-      title: "Maternity Sunset Session", 
+    {
+      id: "dQw4w9WgXcQ",
+      title: "Artistic Portrait Session",
       category: "portraits",
-      thumbnail: "https://images.pexels.com/photos/4269361/pexels-photo-4269361.jpeg?auto=compress&cs=tinysrgb&w=800",
-      client: "The Mitchell Family",
+      thumbnail: "/untitled-5774.jpg",
+      client: "Pure Ohana Treasures",
       year: "2023"
     },
-    { 
-      id: "dQw4w9WgXcQ", 
-      title: "Family Reunion Documentary", 
+    {
+      id: "dQw4w9WgXcQ",
+      title: "Creative Documentary",
       category: "video",
-      thumbnail: "https://images.pexels.com/photos/3894874/pexels-photo-3894874.jpeg?auto=compress&cs=tinysrgb&w=800",
-      client: "The Akana Extended Family",
+      thumbnail: "/untitled-03371.jpg",
+      client: "Pure Ohana Treasures",
       year: "2022"
     },
-    { 
-      id: "dQw4w9WgXcQ", 
-      title: "First Paina Luau", 
+    {
+      id: "dQw4w9WgXcQ",
+      title: "Contemporary Portraits",
       category: "events",
-      thumbnail: "https://images.pexels.com/photos/1684187/pexels-photo-1684187.jpeg?auto=compress&cs=tinysrgb&w=800",
-      client: "The Kealoha Family",
+      thumbnail: "/untitled-5857.jpg",
+      client: "Pure Ohana Treasures",
       year: "2023"
     }
   ];
@@ -310,9 +310,9 @@ const PortfolioPage = () => {
               className="relative group"
             >
               <div className="overflow-hidden rounded-lg">
-                <img 
-                  src="https://images.pexels.com/photos/1000445/pexels-photo-1000445.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                  alt="Wilson Family Adventure" 
+                <img
+                  src="/IMG_8175.jpg"
+                  alt="Wilson Family Adventure"
                   className="w-full h-auto transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
@@ -384,9 +384,9 @@ const PortfolioPage = () => {
               className="relative group order-1 lg:order-1"
             >
               <div className="overflow-hidden rounded-lg">
-                <img 
-                  src="https://images.pexels.com/photos/1684187/pexels-photo-1684187.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                  alt="First Paina Luau" 
+                <img
+                  src="/IMG_8209.jpg"
+                  alt="First Paina Luau"
                   className="w-full h-auto transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
