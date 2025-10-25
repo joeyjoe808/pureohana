@@ -34,5 +34,53 @@ lerna-debug.log*
 *.sln
 *.sw?
 
-# Keep .env for Supabase config
-!.env
+# Environment files
+.env
+.env.local
+
+# Backup files (move to archives)
+backup/
+*.backup
+*.bak
+*~
+
+# CLAUDE.md (project instructions, archived)
+CLAUDE.md
+
+# Old/duplicate files (to be removed)
+App.tsx
+AppSimple.tsx
+
+# Temporary files
+*.tmp
+*.temp
+
+# Build artifacts
+*.tsbuildinfo
+
+# Cache
+.cache/
+.parcel-cache/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# OS files
+Thumbs.db
+Desktop.ini
+
+# Large media files (should be in Supabase storage, not in repo)
+/public/*.jpg
+/public/*.jpeg
+/public/*.png
+/public/*.gif
+/public/*.mp4
+/public/*.mov
+!/public/icon-*.png
+node_modules/

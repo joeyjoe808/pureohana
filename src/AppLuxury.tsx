@@ -8,7 +8,7 @@ import { supabase, checkSupabaseConnection } from './lib/supabase';
 import HomePageLuxury from './pages/HomePageLuxury';
 import PortfolioLuxury from './pages/PortfolioLuxury';
 import TestPage from './pages/TestPage';
-import AdminBasic from './pages/AdminBasic';
+// AdminBasic removed - use new admin system
 // const AboutPage = lazy(() => import('./pages/AboutPage'));
 // const ContactPage = lazy(() => import('./pages/ContactPage'));
 
@@ -38,9 +38,8 @@ function AppLuxury() {
       <div className="min-h-screen bg-white">
         <NavbarLuxury />
         <Routes>
-            {/* Admin route - SECRET! */}
-            <Route path="/admin" element={<AdminBasic />} />
-            
+            {/* Admin route removed - use /admin from App-New.tsx instead */}
+
             {/* Test route */}
             <Route path="/test" element={<TestPage />} />
             

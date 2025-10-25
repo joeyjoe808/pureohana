@@ -1,0 +1,99 @@
+{
+  "budgets": [
+    {
+      "resourceSizes": [
+        {
+          "resourceType": "script",
+          "budget": 300
+        },
+        {
+          "resourceType": "stylesheet",
+          "budget": 50
+        },
+        {
+          "resourceType": "image",
+          "budget": 500
+        },
+        {
+          "resourceType": "font",
+          "budget": 100
+        },
+        {
+          "resourceType": "total",
+          "budget": 1000
+        }
+      ],
+      "timings": [
+        {
+          "metric": "interactive",
+          "budget": 3000
+        },
+        {
+          "metric": "first-contentful-paint",
+          "budget": 1800
+        },
+        {
+          "metric": "largest-contentful-paint",
+          "budget": 2500
+        },
+        {
+          "metric": "cumulative-layout-shift",
+          "budget": 0.1
+        },
+        {
+          "metric": "first-input-delay",
+          "budget": 100
+        }
+      ]
+    }
+  ],
+  "targets": {
+    "LCP": {
+      "good": 2500,
+      "acceptable": 4000
+    },
+    "FID": {
+      "good": 100,
+      "acceptable": 300
+    },
+    "CLS": {
+      "good": 0.1,
+      "acceptable": 0.25
+    },
+    "FCP": {
+      "good": 1800,
+      "acceptable": 3000
+    },
+    "TTFB": {
+      "good": 600,
+      "acceptable": 1500
+    }
+  },
+  "bundleSizes": {
+    "react-vendor": {
+      "max": 150,
+      "warning": 120
+    },
+    "supabase-vendor": {
+      "max": 80,
+      "warning": 60
+    },
+    "animation-vendor": {
+      "max": 100,
+      "warning": 80
+    },
+    "ui-vendor": {
+      "max": 50,
+      "warning": 40
+    },
+    "main": {
+      "max": 200,
+      "warning": 150
+    }
+  },
+  "notes": {
+    "resourceSizes": "Size budgets in KB (after gzip)",
+    "timings": "Timing budgets in milliseconds",
+    "bundleSizes": "Individual chunk size budgets in KB (after gzip)"
+  }
+}

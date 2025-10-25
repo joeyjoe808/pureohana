@@ -1,0 +1,115 @@
+/**
+ * Pure Ohana Treasures - Main Application
+ *
+ * Production-grade React application following SOLID principles.
+ *
+ * Features:
+ * - Clean architecture with dependency injection
+ * - Type-safe routing with React Router v6
+ * - Code splitting for optimal performance
+ * - Authentication with protected routes
+ * - Centralized error handling
+ * - Performance monitoring
+ *
+ * Architecture:
+ * - Domain Layer: Business logic and entities
+ * - Infrastructure Layer: Supabase implementations
+ * - Presentation Layer: React components
+ */
+
+import { lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { SWRConfig } from 'swr';
+import { AuthProvider } from './contexts/AuthContext';
+import { Container } from './infrastructure/container';
+import { swrConfig } from './lib/swr-config';
+import { PageLoader } from './components/PageLoader';
+import { ProtectedRoute, RedirectIfAuthenticated } from './components/ProtectedRoute';
+
+// Initialize dependency injection container
+Container.initialize(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
+
+/**
+ * Lazy-loaded page components for code splitting
+ */
+// Public Pages
+const Home = lazy(() => import('./pages/Home'));
+const Portfolio = lazy(() => import('./pages/Portfolio'));
+const About = lazy(() => import('./pages/About'));
+const Services = lazy(() => import('./pages/Services'));
+const Contact = lazy(() => import('./pages/Contact'));
+const BlogList = lazy(() => import('./pages/BlogList'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+
+// Admin Pages
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
+const AdminGalleries = lazy(() => import('./pages/admin/AdminGalleries'));
+const AdminPhotos = lazy(() => import('./pages/admin/AdminPhotos'));
+const AdminInquiries = lazy(() => import('./pages/admin/AdminInquiries'));
+const AdminSettings = lazy(() => import('./pages/admin/AdminSettings'));
+
+// Layouts
+const PublicLayout = lazy(() => import('./layouts/PublicLayout'));
+const AdminLayout = lazy(() => import('./layouts/AdminLayout'));
+
+/**
+ * Main Application Component
+ */
+export default function App() {
+  return (
+    <BrowserRouter>
+      <SWRConfig value={swrConfig}>
+        <AuthProvider>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              {/* Public Routes */}
+              <Route element={<PublicLayout />}>
+                <Route index element={<Home />} />
+                <Route path="portfolio" element={<Portfolio />} />
+                <Route path="portfolio/:galleryId" element={<Portfolio />} />
+                <Route path="about" element={<About />} />
+                <Route path="services" element={<Services />} />
+                <Route path="contact" element={<Contact />} />
+                <Route path="blog" element={<BlogList />} />
+                <Route path="blog/:slug" element={<BlogPost />} />
+              </Route>
+
+              {/* Admin Login (redirect if already authenticated) */}
+              <Route
+                path="/admin/login"
+                element={
+                  <RedirectIfAuthenticated>
+                    <AdminLogin />
+                  </RedirectIfAuthenticated>
+                }
+              />
+
+              {/* Protected Admin Routes */}
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute>
+                    <AdminLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<AdminDashboard />} />
+                <Route path="galleries" element={<AdminGalleries />} />
+                <Route path="photos" element={<AdminPhotos />} />
+                <Route path="inquiries" element={<AdminInquiries />} />
+                <Route path="settings" element={<AdminSettings />} />
+              </Route>
+
+              {/* 404 - Redirect to home */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
+        </AuthProvider>
+      </SWRConfig>
+    </BrowserRouter>
+  );
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - Pure Ohana Photography</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .icon {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 2rem;
+      opacity: 0.9;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .features {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .features h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .features ul {
+      list-style: none;
+    }
+
+    .features li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .features li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #4ade80;
+      font-weight: bold;
+    }
+
+    .button {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      padding: 1rem 2rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .features {
+        padding: 1.5rem;
+      }
+    }
+
+    .pulse {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.9;
+      }
+      50% {
+        opacity: 0.6;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <svg class="icon pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <circle cx="12" cy="12" r="10" stroke-width="2"/>
+      <path d="M12 6v6l4 2" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+
+    <h1>You're Offline</h1>
+
+    <p>
+      It looks like you've lost your internet connection.
+      Don't worry, we've saved some content for you to view offline.
+    </p>
+
+    <div class="features">
+      <h2>What you can still do:</h2>
+      <ul>
+        <li>Browse previously viewed galleries</li>
+        <li>View cached portfolio images</li>
+        <li>Read saved blog posts</li>
+        <li>Navigate between pages you've visited</li>
+      </ul>
+    </div>
+
+    <a href="/" class="button">Try Again</a>
+
+    <script>
+      // Auto-refresh when back online
+      window.addEventListener('online', () => {
+        window.location.reload();
+      });
+
+      // Check connection periodically
+      setInterval(() => {
+        if (navigator.onLine) {
+          window.location.reload();
+        }
+      }, 5000);
+    </script>
+  </div>
+</body>
+</html>
