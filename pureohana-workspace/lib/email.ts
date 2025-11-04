@@ -1,15 +1,23 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 interface EmailParams {
   to: string
   subject: string
   html: string
 }
 
-export async function sendEmail({ to, subject, html }: EmailParams) {
+// Lazy-load Resend client to avoid build-time errors when API key is missing
+function getResendClient() {
   if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 're_your_key') {
+    return null
+  }
+  return new Resend(process.env.RESEND_API_KEY)
+}
+
+export async function sendEmail({ to, subject, html }: EmailParams) {
+  const resend = getResendClient()
+
+  if (!resend) {
     console.log('Resend API key not configured. Email would have been sent:', { to, subject })
     return { success: false, message: 'Resend API key not configured' }
   }
