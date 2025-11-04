@@ -257,55 +257,57 @@ export default function GalleryDetailPage({ params }: GalleryPageProps) {
   }
 
   return (
-    <Container className="py-12">
+    <Container className="py-8 sm:py-12">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-6 sm:mb-8">
         <Link
           href="/admin/galleries"
-          className="inline-flex items-center gap-2 text-sunset-600 hover:text-sunset-700 font-serif mb-4"
+          className="inline-flex items-center gap-2 text-sunset-600 hover:text-sunset-700 font-serif mb-4 text-sm sm:text-base"
         >
-          <ArrowLeft size={20} />
-          Back to galleries
+          <ArrowLeft size={18} className="flex-shrink-0" />
+          <span className="truncate">Back to galleries</span>
         </Link>
 
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <Heading level={1} className="mb-2">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <Heading level={1} className="mb-2 text-xl sm:text-2xl lg:text-3xl break-words">
               {gallery?.title}
             </Heading>
-            <p className="font-serif text-charcoal-600 mb-2">
+            <p className="font-serif text-charcoal-600 mb-2 text-sm sm:text-base truncate">
               /{gallery?.slug}
             </p>
             {gallery?.description && (
-              <p className="font-serif text-charcoal-600 max-w-2xl">
+              <p className="font-serif text-charcoal-600 text-sm sm:text-base max-w-2xl line-clamp-3 sm:line-clamp-none">
                 {gallery.description}
               </p>
             )}
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 sm:flex-shrink-0">
             <button
               onClick={copyGalleryLink}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-sunset-600 text-white rounded-luxury font-serif text-sm hover:bg-sunset-700 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-sunset-600 text-white rounded-luxury font-serif text-sm hover:bg-sunset-700 transition-colors whitespace-nowrap"
             >
               {linkCopied ? (
                 <>
-                  <Check size={18} />
-                  Link Copied!
+                  <Check size={16} className="flex-shrink-0" />
+                  <span className="hidden xs:inline">Link Copied!</span>
+                  <span className="xs:hidden">Copied!</span>
                 </>
               ) : (
                 <>
-                  <Link2 size={18} />
-                  Copy Gallery Link
+                  <Link2 size={16} className="flex-shrink-0" />
+                  <span className="hidden xs:inline">Copy Gallery Link</span>
+                  <span className="xs:hidden">Copy Link</span>
                 </>
               )}
             </button>
             <Link
               href={`/galleries/${gallery?.slug}?key=${gallery?.access_key}`}
               target="_blank"
-              className="inline-flex items-center gap-2 px-4 py-2 border-2 border-charcoal-300 text-charcoal-700 rounded-luxury font-serif text-sm hover:bg-charcoal-50 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2 border-2 border-charcoal-300 text-charcoal-700 rounded-luxury font-serif text-sm hover:bg-charcoal-50 transition-colors whitespace-nowrap"
             >
-              <Eye size={18} />
+              <Eye size={16} className="flex-shrink-0" />
               Preview
             </Link>
           </div>
@@ -324,16 +326,16 @@ export default function GalleryDetailPage({ params }: GalleryPageProps) {
       )}
 
       {/* Upload Section */}
-      <div className="bg-white rounded-luxury shadow-luxury p-6 mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h2 className="font-display text-xl text-charcoal-900 mb-1">Upload Photos</h2>
-            <p className="font-serif text-sm text-charcoal-600">
+      <div className="bg-white rounded-luxury shadow-luxury p-4 sm:p-6 mb-6 sm:mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+          <div className="min-w-0">
+            <h2 className="font-display text-lg sm:text-xl text-charcoal-900 mb-1">Upload Photos</h2>
+            <p className="font-serif text-xs sm:text-sm text-charcoal-600">
               Add photos to this gallery
             </p>
           </div>
-          <label className="inline-flex items-center gap-2 bg-sunset-600 text-white px-6 py-3 rounded-luxury font-serif font-medium hover:bg-sunset-700 transition-colors cursor-pointer">
-            <Upload size={18} />
+          <label className="inline-flex items-center justify-center gap-2 bg-sunset-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-luxury font-serif font-medium hover:bg-sunset-700 transition-colors cursor-pointer whitespace-nowrap">
+            <Upload size={18} className="flex-shrink-0" />
             {uploading ? 'Uploading...' : 'Choose Files'}
             <input
               type="file"
@@ -357,28 +359,28 @@ export default function GalleryDetailPage({ params }: GalleryPageProps) {
       </div>
 
       {/* Gallery Link */}
-      <div className="bg-white rounded-luxury shadow-luxury p-6 mb-8">
+      <div className="bg-white rounded-luxury shadow-luxury p-4 sm:p-6 mb-6 sm:mb-8">
         <div className="mb-4">
-          <h3 className="font-display text-lg text-charcoal-900 mb-2">Client Gallery Link</h3>
-          <p className="font-serif text-sm text-charcoal-600 mb-4">
+          <h3 className="font-display text-base sm:text-lg text-charcoal-900 mb-2">Client Gallery Link</h3>
+          <p className="font-serif text-xs sm:text-sm text-charcoal-600 mb-4">
             Share this link with your client to give them access to the gallery
           </p>
-          <div className="flex items-center gap-3 bg-cream-50 p-4 rounded-luxury border border-charcoal-200">
-            <code className="flex-1 font-mono text-sm text-charcoal-900 break-all">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 bg-cream-50 p-3 sm:p-4 rounded-luxury border border-charcoal-200">
+            <code className="flex-1 font-mono text-xs sm:text-sm text-charcoal-900 break-all min-w-0 overflow-x-auto">
               {typeof window !== 'undefined' && gallery ? `${window.location.origin}/galleries/${gallery.slug}?key=${gallery.access_key}` : 'Loading...'}
             </code>
             <button
               onClick={copyGalleryLink}
-              className="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2 bg-sunset-600 text-white rounded-luxury font-serif text-sm hover:bg-sunset-700 transition-colors"
+              className="flex-shrink-0 inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-sunset-600 text-white rounded-luxury font-serif text-xs sm:text-sm hover:bg-sunset-700 transition-colors whitespace-nowrap"
             >
               {linkCopied ? (
                 <>
-                  <Check size={16} />
+                  <Check size={16} className="flex-shrink-0" />
                   Copied
                 </>
               ) : (
                 <>
-                  <Link2 size={16} />
+                  <Link2 size={16} className="flex-shrink-0" />
                   Copy
                 </>
               )}
@@ -388,15 +390,15 @@ export default function GalleryDetailPage({ params }: GalleryPageProps) {
       </div>
 
       {/* Stats */}
-      <div className="bg-white rounded-luxury shadow-luxury p-6 mb-8">
-        <div className="grid grid-cols-3 gap-6">
+      <div className="bg-white rounded-luxury shadow-luxury p-4 sm:p-6 mb-6 sm:mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
           <div>
-            <p className="font-serif text-sm text-charcoal-600 mb-1">Total Photos</p>
-            <p className="font-display text-3xl text-charcoal-900">{photos.length}</p>
+            <p className="font-serif text-xs sm:text-sm text-charcoal-600 mb-1">Total Photos</p>
+            <p className="font-display text-2xl sm:text-3xl text-charcoal-900">{photos.length}</p>
           </div>
           <div>
-            <p className="font-serif text-sm text-charcoal-600 mb-1">Gallery Status</p>
-            <span className={`inline-block px-3 py-1 rounded-full font-serif text-sm ${
+            <p className="font-serif text-xs sm:text-sm text-charcoal-600 mb-1">Gallery Status</p>
+            <span className={`inline-block px-3 py-1 rounded-full font-serif text-xs sm:text-sm whitespace-nowrap ${
               gallery?.is_public
                 ? 'bg-green-100 text-green-700'
                 : 'bg-charcoal-100 text-charcoal-700'
@@ -405,8 +407,8 @@ export default function GalleryDetailPage({ params }: GalleryPageProps) {
             </span>
           </div>
           <div>
-            <p className="font-serif text-sm text-charcoal-600 mb-1">Access Key</p>
-            <code className="font-mono text-sm text-charcoal-900">{gallery?.access_key}</code>
+            <p className="font-serif text-xs sm:text-sm text-charcoal-600 mb-1">Access Key</p>
+            <code className="font-mono text-xs sm:text-sm text-charcoal-900 break-all">{gallery?.access_key}</code>
           </div>
         </div>
       </div>
@@ -414,10 +416,10 @@ export default function GalleryDetailPage({ params }: GalleryPageProps) {
       {/* Photos Grid */}
       {photos.length > 0 ? (
         <div>
-          <h2 className="font-display text-xl text-charcoal-900 mb-4">
+          <h2 className="font-display text-lg sm:text-xl text-charcoal-900 mb-4">
             Photos ({photos.length})
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
             {photos.map((photo) => (
               <div
                 key={photo.id}
@@ -450,15 +452,15 @@ export default function GalleryDetailPage({ params }: GalleryPageProps) {
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-luxury shadow-luxury p-12 text-center">
-          <Upload size={64} className="text-charcoal-300 mx-auto mb-4" />
-          <Heading level={2} className="mb-2">No photos yet</Heading>
-          <p className="font-serif text-charcoal-600 mb-6">
+        <div className="bg-white rounded-luxury shadow-luxury p-8 sm:p-12 text-center">
+          <Upload size={48} className="text-charcoal-300 mx-auto mb-4" />
+          <Heading level={2} className="mb-2 text-lg sm:text-xl lg:text-2xl">No photos yet</Heading>
+          <p className="font-serif text-charcoal-600 mb-6 text-sm sm:text-base">
             Upload photos to this gallery to get started
           </p>
-          <label className="inline-flex items-center gap-2 bg-sunset-600 text-white px-6 py-3 rounded-luxury font-serif font-medium hover:bg-sunset-700 transition-colors cursor-pointer">
-            <Upload size={18} />
-            Upload First Photo
+          <label className="inline-flex items-center justify-center gap-2 bg-sunset-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-luxury font-serif font-medium hover:bg-sunset-700 transition-colors cursor-pointer">
+            <Upload size={18} className="flex-shrink-0" />
+            <span className="whitespace-nowrap">Upload First Photo</span>
             <input
               type="file"
               multiple

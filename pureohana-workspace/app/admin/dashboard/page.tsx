@@ -61,48 +61,48 @@ export default async function AdminDashboardPage() {
     .in('photo_id', photoIds)
 
   return (
-    <Container className="py-12">
-      <div className="mb-12">
-        <Heading level={1} className="mb-2">
+    <Container className="py-8 sm:py-12">
+      <div className="mb-8 sm:mb-12">
+        <Heading level={1} className="mb-2 text-2xl sm:text-3xl">
           Welcome back, {photographer?.full_name || 'Admin'}
         </Heading>
-        <p className="font-serif text-xl text-charcoal-600">
+        <p className="font-serif text-lg sm:text-xl text-charcoal-600">
           {photographer?.business_name}
         </p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        <div className="bg-white rounded-luxury-lg shadow-luxury p-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12">
+        <div className="bg-white rounded-luxury-lg shadow-luxury p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
-            <p className="font-serif text-sm text-charcoal-600">Galleries</p>
-            <Image size={20} className="text-sunset-600" />
+            <p className="font-serif text-xs sm:text-sm text-charcoal-600">Galleries</p>
+            <Image size={18} className="text-sunset-600 flex-shrink-0" />
           </div>
-          <p className="font-display text-3xl text-charcoal-900">{galleriesCount || 0}</p>
+          <p className="font-display text-2xl sm:text-3xl text-charcoal-900">{galleriesCount || 0}</p>
         </div>
 
-        <div className="bg-white rounded-luxury-lg shadow-luxury p-6">
+        <div className="bg-white rounded-luxury-lg shadow-luxury p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
-            <p className="font-serif text-sm text-charcoal-600">Photos</p>
-            <Image size={20} className="text-sunset-600" />
+            <p className="font-serif text-xs sm:text-sm text-charcoal-600">Photos</p>
+            <Image size={18} className="text-sunset-600 flex-shrink-0" />
           </div>
-          <p className="font-display text-3xl text-charcoal-900">{photosCount || 0}</p>
+          <p className="font-display text-2xl sm:text-3xl text-charcoal-900">{photosCount || 0}</p>
         </div>
 
-        <div className="bg-white rounded-luxury-lg shadow-luxury p-6">
+        <div className="bg-white rounded-luxury-lg shadow-luxury p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
-            <p className="font-serif text-sm text-charcoal-600">Favorites</p>
-            <Heart size={20} className="text-sunset-600" />
+            <p className="font-serif text-xs sm:text-sm text-charcoal-600">Favorites</p>
+            <Heart size={18} className="text-sunset-600 flex-shrink-0" />
           </div>
-          <p className="font-display text-3xl text-charcoal-900">{favoritesCount || 0}</p>
+          <p className="font-display text-2xl sm:text-3xl text-charcoal-900">{favoritesCount || 0}</p>
         </div>
 
-        <div className="bg-white rounded-luxury-lg shadow-luxury p-6">
+        <div className="bg-white rounded-luxury-lg shadow-luxury p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
-            <p className="font-serif text-sm text-charcoal-600">Comments</p>
-            <MessageSquare size={20} className="text-sunset-600" />
+            <p className="font-serif text-xs sm:text-sm text-charcoal-600">Comments</p>
+            <MessageSquare size={18} className="text-sunset-600 flex-shrink-0" />
           </div>
-          <p className="font-display text-3xl text-charcoal-900">{commentsCount || 0}</p>
+          <p className="font-display text-2xl sm:text-3xl text-charcoal-900">{commentsCount || 0}</p>
         </div>
       </div>
 
@@ -126,17 +126,17 @@ export default async function AdminDashboardPage() {
                 href={`/admin/galleries/${gallery.id}`}
                 className="block p-4 border border-charcoal-200 rounded-luxury hover:border-sunset-400 hover:shadow-luxury transition-all"
               >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-display text-lg text-charcoal-900">{gallery.title}</h3>
-                    <p className="font-serif text-sm text-charcoal-600">{gallery.slug}</p>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-display text-base sm:text-lg text-charcoal-900 truncate">{gallery.title}</h3>
+                    <p className="font-serif text-sm text-charcoal-600 truncate">{gallery.slug}</p>
                   </div>
-                  <div className="flex items-center gap-4 text-sm text-charcoal-600">
+                  <div className="flex items-center gap-3 sm:gap-4 text-sm text-charcoal-600 flex-shrink-0">
                     <span className="flex items-center gap-1">
                       <Eye size={16} />
                       {gallery.view_count || 0}
                     </span>
-                    <span className={`px-3 py-1 rounded-full font-serif text-xs ${
+                    <span className={`px-3 py-1 rounded-full font-serif text-xs whitespace-nowrap ${
                       gallery.is_public
                         ? 'bg-green-100 text-green-700'
                         : 'bg-charcoal-100 text-charcoal-700'
