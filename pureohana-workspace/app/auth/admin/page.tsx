@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Heading } from '@/components/ui/Heading'
 import { Container } from '@/components/ui/Container'
 
-export default function AdminLoginPage() {
+function AdminLoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
@@ -107,5 +107,26 @@ export default function AdminLoginPage() {
         </div>
       </Container>
     </main>
+  )
+}
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen bg-cream-50 flex items-center justify-center">
+        <Container className="max-w-md">
+          <div className="bg-white rounded-luxury-lg shadow-luxury-lg p-8">
+            <Heading level={1} className="text-center mb-2">
+              Admin Login
+            </Heading>
+            <p className="text-center text-charcoal-600 font-serif">
+              Loading...
+            </p>
+          </div>
+        </Container>
+      </main>
+    }>
+      <AdminLoginForm />
+    </Suspense>
   )
 }
