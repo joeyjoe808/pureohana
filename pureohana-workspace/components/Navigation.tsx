@@ -38,14 +38,14 @@ export default function Navigation() {
   ]
 
   return (
-    <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-luxury z-50">
+    <nav className="fixed top-0 w-full bg-transparent backdrop-blur-md z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <Link href="/" className="group flex items-baseline gap-2 transition-all">
-            <span className="font-display text-2xl text-charcoal-900 group-hover:text-charcoal-700 transition-colors">
+          <Link href="/" className="group flex items-baseline gap-2 transition-all drop-shadow-md">
+            <span className="font-display text-2xl text-white group-hover:text-cream-100 transition-colors [text-shadow:_0_2px_4px_rgb(0_0_0_/_80%)]">
               Pure Ohana
             </span>
-            <span className="font-darlington text-4xl text-sunset-600 group-hover:text-sunset-700 transition-colors leading-none tracking-widest">
+            <span className="font-darlington text-4xl text-sunset-400 group-hover:text-sunset-300 transition-colors leading-none tracking-widest [text-shadow:_0_2px_4px_rgb(0_0_0_/_80%)]">
               Treasures
             </span>
           </Link>
@@ -55,10 +55,10 @@ export default function Navigation() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={'font-serif text-lg transition-colors ' + (
+                className={'font-serif text-lg transition-colors drop-shadow-md ' + (
                   pathname === link.href
-                    ? 'text-sunset-600 font-semibold'
-                    : 'text-charcoal-700 hover:text-sunset-600'
+                    ? 'text-sunset-400 font-semibold [text-shadow:_0_2px_4px_rgb(0_0_0_/_80%)]'
+                    : 'text-white hover:text-sunset-400 [text-shadow:_0_2px_4px_rgb(0_0_0_/_80%)]'
                 )}
               >
                 {link.label}
@@ -69,10 +69,10 @@ export default function Navigation() {
               <Link
                 href="/admin"
                 className={
-                  'flex items-center gap-2 px-4 py-2 rounded-md font-serif text-sm transition-all ' +
+                  'flex items-center gap-2 px-4 py-2 rounded-md font-serif text-sm transition-all drop-shadow-md [text-shadow:_0_2px_4px_rgb(0_0_0_/_80%)] ' +
                   (pathname?.startsWith('/admin')
                     ? 'bg-sunset-600 text-white'
-                    : 'bg-charcoal-900 text-cream-50 hover:bg-sunset-600')
+                    : 'bg-charcoal-900/80 text-cream-50 hover:bg-sunset-600')
                 }
                 title="Admin Dashboard"
               >
@@ -83,7 +83,7 @@ export default function Navigation() {
           </div>
 
           <button
-            className="md:hidden text-charcoal-900 hover:text-sunset-600 transition-colors"
+            className="md:hidden text-white hover:text-sunset-400 transition-colors drop-shadow-md"
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Close menu' : 'Open menu'}
           >
@@ -92,7 +92,7 @@ export default function Navigation() {
         </div>
 
         {isOpen && (
-          <div className="md:hidden pb-4 animate-fade-in-up">
+          <div className="md:hidden pb-4 animate-fade-in-up bg-charcoal-900/95 backdrop-blur-md rounded-b-lg -mx-4 px-4">
             {links.map(link => (
               <Link
                 key={link.href}
@@ -100,8 +100,8 @@ export default function Navigation() {
                 onClick={() => setIsOpen(false)}
                 className={'block py-3 font-serif text-lg transition-colors ' + (
                   pathname === link.href
-                    ? 'text-sunset-600 font-semibold'
-                    : 'text-charcoal-700'
+                    ? 'text-sunset-400 font-semibold'
+                    : 'text-white hover:text-sunset-400'
                 )}
               >
                 {link.label}
@@ -115,8 +115,8 @@ export default function Navigation() {
                 className={
                   'flex items-center gap-2 py-3 font-serif text-lg transition-colors ' +
                   (pathname?.startsWith('/admin')
-                    ? 'text-sunset-600 font-semibold'
-                    : 'text-charcoal-900')
+                    ? 'text-sunset-400 font-semibold'
+                    : 'text-white hover:text-sunset-400')
                 }
               >
                 <Shield size={20} />
