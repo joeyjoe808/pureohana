@@ -1,0 +1,5 @@
+# Archive folder - old project files
+/archive/
+
+# macOS
+.DS_Store
