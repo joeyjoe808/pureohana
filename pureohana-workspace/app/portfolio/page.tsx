@@ -33,8 +33,11 @@ export default async function PortfolioPage() {
     console.error('Error fetching portfolio photos:', placementsError)
   }
 
-  // Extract photos from placements
-  const photos = placements?.map(p => (p.photos as any)).filter(Boolean) || []
+  // Extract photos from placements (handle array or single object)
+  const photos = placements?.map(p => {
+    const photoData = p.photos
+    return photoData ? (Array.isArray(photoData) ? photoData[0] : photoData) : null
+  }).filter(Boolean) || []
 
   // Use placeholder if no photos assigned yet
   const displayPhotos = photos.length > 0 ? photos : [

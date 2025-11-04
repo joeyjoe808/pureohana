@@ -27,10 +27,14 @@ export default async function AboutPage() {
     .single()
 
   // Fallback image if no photo assigned
-  const heroImage = (!photoError && aboutPhoto?.photos) ? aboutPhoto.photos : {
-    web_url: "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/ashley%20looking%20into%20isaiahs%20eyes.jpg",
-    filename: "Pure Ohana Photography"
-  }
+  // Handle case where photos might be an array or single object
+  const photoData = aboutPhoto?.photos
+  const heroImage = (!photoError && photoData)
+    ? (Array.isArray(photoData) ? photoData[0] : photoData)
+    : {
+        web_url: "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/ashley%20looking%20into%20isaiahs%20eyes.jpg",
+        filename: "Pure Ohana Photography"
+      }
 
   // Fetch about content from database
   const { data: aboutContent, error: contentError } = await supabase

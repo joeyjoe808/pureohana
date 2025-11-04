@@ -57,7 +57,9 @@ export default async function HomePage() {
       .limit(1)
       .single()
 
-    return data?.photos
+    // Handle case where photos might be an array or single object
+    const photoData = data?.photos
+    return photoData ? (Array.isArray(photoData) ? photoData[0] : photoData) : null
   })
 
   const gridPhotosResults = await Promise.all(gridPhotosPromises)
