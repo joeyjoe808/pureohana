@@ -14,6 +14,7 @@ interface Photo {
   filename: string
   web_url: string
   thumbnail_url: string
+  original_url?: string
   storage_path?: string
   created_at: string
 }
