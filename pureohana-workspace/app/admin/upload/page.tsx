@@ -106,19 +106,19 @@ export default function AdminUploadPage() {
         const timestamp = Date.now()
         const filename = `${timestamp}-${uploadFile.file.name}`
 
+        // Set initial progress
+        setFiles(prev => {
+          const updated = [...prev]
+          updated[i].progress = 50
+          return updated
+        })
+
         console.log('📁 Uploading to storage bucket:', filename)
         const { data: storageData, error: storageError } = await supabase.storage
           .from('gallery-photos')
           .upload(filename, uploadFile.file, {
-            onUploadProgress: (progress) => {
-              const percent = (progress.loaded / progress.total) * 100
-              console.log(`Progress: ${Math.round(percent)}%`)
-              setFiles(prev => {
-                const updated = [...prev]
-                updated[i].progress = percent
-                return updated
-              })
-            }
+            cacheControl: '3600',
+            upsert: false
           })
 
         if (storageError) {
