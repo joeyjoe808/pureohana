@@ -10,6 +10,7 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  NEXT_DISABLE_TURBOPACK = "1"
 
 [[headers]]
   for = "/*"
