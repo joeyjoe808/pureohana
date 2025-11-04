@@ -1,0 +1,114 @@
+import { Button } from '@/components/ui/Button'
+import { Heading } from '@/components/ui/Heading'
+import { Container } from '@/components/ui/Container'
+
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-cream-50">
+      <Container className="py-20">
+        <div className="space-y-12 animate-fade-in-up">
+          {/* Hero Section */}
+          <div className="text-center space-y-6">
+            <Heading level={1}>Pure Ohana Treasures</Heading>
+            <p className="text-xl md:text-2xl font-serif text-charcoal-700 max-w-3xl mx-auto">
+              Capturing Life's Most Precious Moments with Luxury & Aloha
+            </p>
+            <div className="flex gap-4 justify-center flex-wrap">
+              <Button variant="primary" size="lg">Get Started</Button>
+              <Button variant="outline" size="lg">View Portfolio</Button>
+            </div>
+          </div>
+
+          {/* Test All Heading Levels */}
+          <div className="space-y-4 pt-12 border-t border-charcoal-200">
+            <Heading level={2}>Design System Test</Heading>
+            <Heading level={3}>Heading Level 3</Heading>
+            <Heading level={4}>Heading Level 4</Heading>
+            <Heading level={5}>Heading Level 5</Heading>
+            <Heading level={6}>Heading Level 6</Heading>
+          </div>
+
+          {/* Test Buttons */}
+          <div className="space-y-4 pt-8">
+            <Heading level={4}>Button Variants</Heading>
+            <div className="flex gap-4 flex-wrap">
+              <Button variant="primary">Primary</Button>
+              <Button variant="secondary">Secondary</Button>
+              <Button variant="outline">Outline</Button>
+              <Button variant="ghost">Ghost</Button>
+            </div>
+            <div className="flex gap-4 flex-wrap">
+              <Button variant="primary" size="sm">Small</Button>
+              <Button variant="primary" size="md">Medium</Button>
+              <Button variant="primary" size="lg">Large</Button>
+            </div>
+          </div>
+
+          {/* Test Colors */}
+          <div className="space-y-4 pt-8">
+            <Heading level={4}>Color Palette</Heading>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              <div>
+                <div className="h-24 bg-cream-200 rounded-lg shadow-luxury"></div>
+                <p className="text-sm mt-2 text-center font-serif">Cream</p>
+              </div>
+              <div>
+                <div className="h-24 bg-charcoal-900 rounded-lg shadow-luxury"></div>
+                <p className="text-sm mt-2 text-center font-serif">Charcoal</p>
+              </div>
+              <div>
+                <div className="h-24 bg-sunset-600 rounded-lg shadow-luxury"></div>
+                <p className="text-sm mt-2 text-center font-serif">Sunset</p>
+              </div>
+              <div>
+                <div className="h-24 bg-ocean-600 rounded-lg shadow-luxury"></div>
+                <p className="text-sm mt-2 text-center font-serif">Ocean</p>
+              </div>
+              <div>
+                <div className="h-24 bg-gold-600 rounded-lg shadow-luxury"></div>
+                <p className="text-sm mt-2 text-center font-serif">Gold</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Test Shadows */}
+          <div className="space-y-4 pt-8">
+            <Heading level={4}>Luxury Shadows</Heading>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white p-8 rounded-lg shadow-luxury-sm">
+                <p className="font-serif text-center">luxury-sm</p>
+              </div>
+              <div className="bg-white p-8 rounded-lg shadow-luxury">
+                <p className="font-serif text-center">luxury</p>
+              </div>
+              <div className="bg-white p-8 rounded-lg shadow-luxury-lg">
+                <p className="font-serif text-center">luxury-lg</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Font Test */}
+          <div className="space-y-4 pt-8">
+            <Heading level={4}>Typography</Heading>
+            <p className="font-display text-2xl">Playfair Display (Display Font)</p>
+            <p className="font-serif text-xl">Cormorant Garamond (Serif Font)</p>
+            <p className="font-sans text-lg">Inter (Sans-Serif Font)</p>
+          </div>
+
+          {/* Animations Test */}
+          <div className="space-y-4 pt-8">
+            <Heading level={4}>Animations</Heading>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-white p-6 rounded-lg shadow-luxury animate-scale-in">
+                <p className="font-serif text-center">Scale In</p>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-luxury animate-float">
+                <p className="font-serif text-center">Float</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </main>
+  )
+}
