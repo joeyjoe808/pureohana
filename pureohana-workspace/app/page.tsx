@@ -88,10 +88,10 @@ export default async function HomePage() {
     photo || placeholderImages[idx]
   )
   return (
-    <main>
+    <main className="-mt-20">
       {/* HERO - Full screen, one stunning image, minimal text */}
-      <section className="relative h-screen w-full overflow-hidden">
-        <div className="absolute inset-0">
+      <section className="relative h-screen w-full overflow-hidden pt-20">
+        <div className="absolute inset-0 -mt-20">
           <Image
             src="https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg"
             alt="Luxury Hawaii Wedding Photography"
