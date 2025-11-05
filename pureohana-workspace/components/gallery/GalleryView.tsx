@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import type { Photo, Gallery } from '@/lib/supabase/types'
 import Lightbox from './Lightbox'
 import FavoriteButton from './FavoriteButton'
@@ -37,12 +38,18 @@ export default function GalleryView({ photos, gallery }: GalleryViewProps) {
             onClick={() => setSelectedIndex(index)}
           >
             <div className="relative overflow-hidden bg-charcoal-100 rounded-lg hover:shadow-luxury transition-all duration-300 hover:scale-[1.02]">
-              <img
-                src={photo.thumbnail_url}
-                alt={photo.filename}
-                className="w-full h-auto block"
-                loading="lazy"
-              />
+              <div className="relative w-full aspect-auto">
+                <Image
+                  src={photo.thumbnail_url}
+                  alt={photo.filename}
+                  width={400}
+                  height={photo.height && photo.width ? Math.round((photo.height / photo.width) * 400) : 600}
+                  className="w-full h-auto block"
+                  loading={index < 12 ? 'eager' : 'lazy'}
+                  quality={85}
+                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                />
+              </div>
               <FavoriteButton photoId={photo.id} galleryId={gallery.id} />
               <CommentButton photoId={photo.id} galleryId={gallery.id} />
             </div>
