@@ -21,6 +21,29 @@ export default function Lightbox({ photos, currentIndex, onClose, onNext, onPrev
     try {
       const response = await fetch(currentPhoto.original_url)
       const blob = await response.blob()
+
+      // iOS/Safari: Use Web Share API to save to Photos app
+      if (navigator.canShare && navigator.share) {
+        try {
+          // Create a File object from the blob
+          const file = new File([blob], currentPhoto.filename, { type: blob.type })
+
+          // Check if we can share files
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: currentPhoto.filename,
+              text: 'Download full resolution photo'
+            })
+            return // Successfully shared, exit
+          }
+        } catch (shareError) {
+          console.log('Share API not supported or user cancelled:', shareError)
+          // Fall through to standard download
+        }
+      }
+
+      // Desktop/Standard download: Create blob URL and trigger download
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
