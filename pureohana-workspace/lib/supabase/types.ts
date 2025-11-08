@@ -86,6 +86,8 @@ export interface Favorite {
   photo_id: string // UUID
   gallery_id: string // UUID
   client_identifier: string // Hashed IP or cookie ID
+  client_name: string | null // Client's name (optional)
+  client_email: string | null // Client's email (optional)
   created_at: string // ISO timestamp
 }
 
@@ -193,7 +195,10 @@ export interface BlogPost {
 export type PhotographerInsert = Omit<Photographer, 'created_at' | 'updated_at'>
 export type GalleryInsert = Omit<Gallery, 'id' | 'created_at' | 'updated_at' | 'view_count'>
 export type PhotoInsert = Omit<Photo, 'id' | 'created_at' | 'updated_at'>
-export type FavoriteInsert = Omit<Favorite, 'id' | 'created_at'>
+export type FavoriteInsert = Omit<Favorite, 'id' | 'created_at'> & {
+  client_name?: string | null
+  client_email?: string | null
+}
 export type CommentInsert = Omit<Comment, 'id' | 'created_at' | 'is_read' | 'photographer_reply' | 'replied_at' | 'is_liked'>
 export type UploadSessionInsert = Omit<UploadSession, 'id' | 'created_at' | 'completed_photos' | 'failed_photos' | 'status'>
 export type ContactSubmissionInsert = Omit<ContactSubmission, 'id' | 'created_at' | 'is_read' | 'photographer_notes' | 'status' | 'responded_at'>
