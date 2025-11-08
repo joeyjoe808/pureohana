@@ -65,13 +65,11 @@ export default function Lightbox({ photos, currentIndex, onClose, onNext, onPrev
 
   // Share photo URL
   const handleShare = async () => {
-    const photoUrl = `${window.location.origin}${window.location.pathname}?photo=${currentPhoto.id}`
+    const photoUrl = `${window.location.origin}${window.location.pathname}?photo=${currentPhoto.id}&key=${new URLSearchParams(window.location.search).get('key')}`
 
     if (navigator.share) {
       try {
         await navigator.share({
-          title: currentPhoto.filename,
-          text: 'Check out this photo',
           url: photoUrl,
         })
       } catch (error) {

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { createServerClient } from '@/lib/supabase'
 import type { Photo, Gallery } from '@/lib/supabase'
+import type { Metadata } from 'next'
 import GalleryView from '@/components/gallery/GalleryView'
 
 interface PageProps {
@@ -9,7 +10,94 @@ interface PageProps {
   }>
   searchParams: Promise<{
     key?: string
+    photo?: string
   }>
+}
+
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
+  const { slug } = await params
+  const { key, photo: photoId } = await searchParams
+  const supabase = await createServerClient()
+
+  // Fetch gallery
+  const { data: gallery } = await supabase
+    .from('galleries')
+    .select('*')
+    .eq('slug', slug)
+    .maybeSingle()
+
+  if (!gallery || gallery.access_key !== key) {
+    return {
+      title: 'Gallery - Pure Ohana Treasures',
+    }
+  }
+
+  // If sharing a specific photo
+  if (photoId) {
+    const { data: photo } = await supabase
+      .from('photos')
+      .select('*')
+      .eq('id', photoId)
+      .eq('gallery_id', gallery.id)
+      .maybeSingle()
+
+    if (photo) {
+      return {
+        title: `${photo.filename} - ${gallery.title}`,
+        description: `View this photo from ${gallery.title}`,
+        openGraph: {
+          title: `${photo.filename} - ${gallery.title}`,
+          description: `View this photo from ${gallery.title}`,
+          images: [
+            {
+              url: photo.web_url,
+              width: photo.width || 1920,
+              height: photo.height || 1280,
+              alt: photo.filename,
+            },
+          ],
+        },
+        twitter: {
+          card: 'summary_large_image',
+          title: `${photo.filename} - ${gallery.title}`,
+          description: `View this photo from ${gallery.title}`,
+          images: [photo.web_url],
+        },
+      }
+    }
+  }
+
+  // Default gallery metadata
+  const { data: coverPhoto } = await supabase
+    .from('photos')
+    .select('*')
+    .eq('gallery_id', gallery.id)
+    .order('position', { ascending: true })
+    .limit(1)
+    .maybeSingle()
+
+  return {
+    title: `${gallery.title} - Pure Ohana Treasures`,
+    description: gallery.description || `View photos from ${gallery.title}`,
+    openGraph: {
+      title: gallery.title,
+      description: gallery.description || `View photos from ${gallery.title}`,
+      images: coverPhoto ? [
+        {
+          url: coverPhoto.web_url,
+          width: coverPhoto.width || 1920,
+          height: coverPhoto.height || 1280,
+          alt: gallery.title,
+        },
+      ] : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: gallery.title,
+      description: gallery.description || `View photos from ${gallery.title}`,
+      images: coverPhoto ? [coverPhoto.web_url] : [],
+    },
+  }
 }
 
 export default async function GalleryPage({ params, searchParams }: PageProps) {
