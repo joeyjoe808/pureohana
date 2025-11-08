@@ -243,7 +243,8 @@ export default function NewGalleryPage() {
           </p>
           <ul className="font-serif text-sm text-blue-800 space-y-1 list-disc list-inside">
             <li>Your gallery will be created with a unique access key</li>
-            <li>You can upload photos to this gallery</li>
+            <li>Upload photos to your new gallery</li>
+            <li>Select a hero image to use as the gallery landing page</li>
             <li>Share the gallery link with your clients</li>
             <li>Clients can view, favorite, and comment on photos</li>
           </ul>

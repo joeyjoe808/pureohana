@@ -3,6 +3,7 @@ import { createServerClient } from '@/lib/supabase'
 import type { Photo, Gallery } from '@/lib/supabase'
 import type { Metadata } from 'next'
 import GalleryView from '@/components/gallery/GalleryView'
+import NextImage from 'next/image'
 
 interface PageProps {
   params: Promise<{
@@ -153,24 +154,76 @@ export default async function GalleryPage({ params, searchParams }: PageProps) {
 
   return (
     <div className="min-h-screen bg-cream-50">
+      {/* Hero Section with Cover Image */}
+      {gallery.cover_photo_url && (
+        <div className="relative h-screen w-full flex items-center justify-center overflow-hidden">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <NextImage
+              src={gallery.cover_photo_url}
+              alt={gallery.title}
+              fill
+              className="object-cover"
+              priority
+              quality={90}
+            />
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-charcoal-900/40 via-charcoal-900/30 to-charcoal-900/60" />
+          </div>
+
+          {/* Centered Title */}
+          <div className="relative z-10 text-center px-4">
+            <h1 className="font-display text-6xl md:text-8xl text-white mb-6 tracking-wide drop-shadow-2xl">
+              {gallery.title}
+            </h1>
+            {gallery.description && (
+              <p className="font-serif text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed drop-shadow-lg">
+                {gallery.description}
+              </p>
+            )}
+          </div>
+
+          {/* Scroll Indicator */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+            <div className="w-6 h-10 rounded-full border-2 border-white/50 flex items-start justify-center p-2">
+              <div className="w-1 h-3 bg-white/50 rounded-full" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Gallery Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Gallery Header */}
-        <div className="mb-12 text-center">
-          <h1 className="font-display text-5xl md:text-6xl text-charcoal-900 mb-4">
-            {gallery.title}
-          </h1>
-          {gallery.description && (
-            <p className="font-serif text-xl text-charcoal-600 max-w-3xl mx-auto leading-relaxed">
-              {gallery.description}
-            </p>
-          )}
-          <div className="mt-6 font-serif text-sm text-charcoal-500">
+        {/* Gallery Header (only shown if no cover image) */}
+        {!gallery.cover_photo_url && (
+          <div className="mb-12 text-center">
+            <h1 className="font-display text-5xl md:text-6xl text-charcoal-900 mb-4">
+              {gallery.title}
+            </h1>
+            {gallery.description && (
+              <p className="font-serif text-xl text-charcoal-600 max-w-3xl mx-auto leading-relaxed">
+                {gallery.description}
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Photo Count */}
+        <div className="text-center mb-12">
+          <div className="font-serif text-sm text-charcoal-500">
             {galleryPhotos.length} {galleryPhotos.length === 1 ? 'photo' : 'photos'}
           </div>
         </div>
 
         {/* Gallery Grid */}
         <GalleryView photos={galleryPhotos} gallery={gallery} />
+
+        {/* Elegant Footer */}
+        <div className="mt-20 mb-12 text-center">
+          <p className="font-display text-2xl md:text-3xl text-charcoal-600 italic tracking-wide">
+            With Aloha From Pure Ohana Treasures
+          </p>
+        </div>
       </div>
     </div>
   )

@@ -24,6 +24,7 @@ interface Gallery {
   title: string
   slug: string
   description: string | null
+  cover_photo_url: string | null
   access_key: string
   is_public: boolean
 }
@@ -303,6 +304,14 @@ export default function GalleryDetailPage({ params }: GalleryPageProps) {
               )}
             </button>
             <Link
+              href={`/admin/galleries/${gallery?.id}/edit`}
+              className="inline-flex items-center justify-center gap-2 px-4 py-2 border-2 border-charcoal-300 text-charcoal-700 rounded-luxury font-serif text-sm hover:bg-charcoal-50 transition-colors whitespace-nowrap"
+            >
+              <Settings size={16} className="flex-shrink-0" />
+              <span className="hidden xs:inline">Edit Gallery</span>
+              <span className="xs:hidden">Edit</span>
+            </Link>
+            <Link
               href={`/galleries/${gallery?.slug}?key=${gallery?.access_key}`}
               target="_blank"
               className="inline-flex items-center justify-center gap-2 px-4 py-2 border-2 border-charcoal-300 text-charcoal-700 rounded-luxury font-serif text-sm hover:bg-charcoal-50 transition-colors whitespace-nowrap"
@@ -321,6 +330,26 @@ export default function GalleryDetailPage({ params }: GalleryPageProps) {
           <div>
             <p className="font-serif text-red-900 font-medium">Error</p>
             <p className="font-serif text-red-800 text-sm">{error}</p>
+          </div>
+        </div>
+      )}
+
+      {/* Hero Image Prompt */}
+      {photos.length > 0 && !gallery?.cover_photo_url && (
+        <div className="bg-blue-50 border-2 border-blue-200 rounded-luxury p-4 mb-6 flex items-start gap-3">
+          <AlertCircle size={20} className="text-blue-600 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <p className="font-serif text-blue-900 font-medium mb-1">Select a Hero Image</p>
+            <p className="font-serif text-blue-800 text-sm mb-3">
+              Choose a cover image to create a stunning landing page for your gallery with an elegant title overlay.
+            </p>
+            <Link
+              href={`/admin/galleries/${gallery?.id}/edit`}
+              className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-luxury font-serif text-sm hover:bg-blue-700 transition-colors"
+            >
+              <Settings size={16} />
+              Select Hero Image
+            </Link>
           </div>
         </div>
       )}
