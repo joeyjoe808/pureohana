@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createServerClient } from '@/lib/supabase'
 import Link from 'next/link'
-import { LogOut, LayoutDashboard, Image, Upload, Heart, MessageSquare, Images, FileText, Briefcase, Info, Home } from 'lucide-react'
+import { LogOut, LayoutDashboard, Image, Upload, Heart, MessageSquare, Images, FileText, Briefcase, Info, Home, MessagesSquare } from 'lucide-react'
 
 async function AdminNav() {
   return (
@@ -28,6 +28,10 @@ async function AdminNav() {
             <Link href="/admin/upload" className="flex items-center gap-1 sm:gap-2 text-cream-100 hover:text-sunset-400 transition-colors font-serif text-sm whitespace-nowrap">
               <Upload size={16} className="flex-shrink-0" />
               <span className="hidden md:inline">Upload</span>
+            </Link>
+            <Link href="/admin/feedback" className="flex items-center gap-1 sm:gap-2 text-cream-100 hover:text-sunset-400 transition-colors font-serif text-sm whitespace-nowrap">
+              <MessagesSquare size={16} className="flex-shrink-0" />
+              <span className="hidden md:inline">Feedback</span>
             </Link>
             <Link href="/admin/blog" className="flex items-center gap-1 sm:gap-2 text-cream-100 hover:text-sunset-400 transition-colors font-serif text-sm whitespace-nowrap">
               <FileText size={16} className="flex-shrink-0" />

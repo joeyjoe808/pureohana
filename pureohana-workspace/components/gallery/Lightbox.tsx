@@ -1,9 +1,11 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { X, ChevronLeft, ChevronRight, Download } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Download, Loader2, Heart, Share2, MessageCircle } from 'lucide-react'
 import type { Photo } from '@/lib/supabase/types'
+import FavoriteButton from './FavoriteButton'
+import CommentButton from './CommentButton'
 
 interface LightboxProps {
   photos: Photo[]
@@ -11,10 +13,17 @@ interface LightboxProps {
   onClose: () => void
   onNext: () => void
   onPrev: () => void
+  galleryId: string
 }
 
-export default function Lightbox({ photos, currentIndex, onClose, onNext, onPrev }: LightboxProps) {
+export default function Lightbox({ photos, currentIndex, onClose, onNext, onPrev, galleryId }: LightboxProps) {
   const currentPhoto = photos[currentIndex]
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
+
+  // Reset loading state when photo changes
+  useEffect(() => {
+    setIsImageLoaded(false)
+  }, [currentIndex])
 
   // Download the FULL RESOLUTION original
   const handleDownload = async () => {
@@ -25,25 +34,20 @@ export default function Lightbox({ photos, currentIndex, onClose, onNext, onPrev
       // iOS/Safari: Use Web Share API to save to Photos app
       if (navigator.canShare && navigator.share) {
         try {
-          // Create a File object from the blob
           const file = new File([blob], currentPhoto.filename, { type: blob.type })
-
-          // Check if we can share files
           if (navigator.canShare({ files: [file] })) {
             await navigator.share({
               files: [file],
               title: currentPhoto.filename,
-              text: 'Download full resolution photo'
             })
-            return // Successfully shared, exit
+            return
           }
         } catch (shareError) {
           console.log('Share API not supported or user cancelled:', shareError)
-          // Fall through to standard download
         }
       }
 
-      // Desktop/Standard download: Create blob URL and trigger download
+      // Desktop/Standard download
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
@@ -54,8 +58,27 @@ export default function Lightbox({ photos, currentIndex, onClose, onNext, onPrev
       document.body.removeChild(a)
     } catch (error) {
       console.error('Download failed:', error)
-      // Fallback: open in new tab
       window.open(currentPhoto.original_url, '_blank')
+    }
+  }
+
+  // Share photo URL
+  const handleShare = async () => {
+    const photoUrl = `${window.location.origin}${window.location.pathname}?photo=${currentPhoto.id}`
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: currentPhoto.filename,
+          text: 'Check out this photo',
+          url: photoUrl,
+        })
+      } catch (error) {
+        console.log('Share cancelled or failed:', error)
+      }
+    } else {
+      await navigator.clipboard.writeText(photoUrl)
+      alert('Photo link copied to clipboard!')
     }
   }
 
@@ -77,30 +100,67 @@ export default function Lightbox({ photos, currentIndex, onClose, onNext, onPrev
   }, [onClose, onNext, onPrev, currentPhoto])
 
   return (
-    <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center">
-      {/* Close button */}
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 text-white hover:text-cream-200 transition-colors z-50 p-2 rounded-full hover:bg-white/10"
-        aria-label="Close"
-      >
-        <X className="w-8 h-8" />
-      </button>
+    <div className="fixed inset-0 bg-white z-50 flex items-center justify-center" id="lightbox-container">
+      {/* Hidden but functional favorite and comment components */}
+      <div className="hidden">
+        <FavoriteButton photoId={currentPhoto.id} galleryId={galleryId} />
+        <CommentButton photoId={currentPhoto.id} galleryId={galleryId} />
+      </div>
 
-      {/* Download button - Downloads FULL RESOLUTION original */}
-      <button
-        onClick={handleDownload}
-        className="absolute top-4 left-4 text-white hover:text-cream-200 transition-all z-50 bg-white/10 backdrop-blur-sm rounded-full p-3 hover:bg-white/20 shadow-luxury flex items-center gap-2"
-        aria-label="Download full resolution"
-        title="Download original full-resolution image"
-      >
-        <Download className="w-6 h-6" />
-        <span className="hidden sm:inline font-serif text-sm">Download Original</span>
-      </button>
+      {/* Top right icons - Pixieset style */}
+      <div className="absolute top-4 right-4 flex items-center gap-3 z-50">
+        <button
+          onClick={() => {
+            const container = document.getElementById('lightbox-container')
+            const favoriteBtn = container?.querySelector('button[aria-label*="avorite"]') as HTMLButtonElement
+            favoriteBtn?.click()
+          }}
+          className="text-charcoal-600 hover:text-red-500 transition-colors p-2"
+          aria-label="Favorite Photo"
+          title="Favorite"
+        >
+          <Heart className="w-6 h-6" />
+        </button>
+        <button
+          onClick={() => {
+            const container = document.getElementById('lightbox-container')
+            const commentBtn = container?.querySelector('button[aria-label*="comment" i]') as HTMLButtonElement
+            commentBtn?.click()
+          }}
+          className="text-charcoal-600 hover:text-charcoal-900 transition-colors p-2"
+          aria-label="Comment on Photo"
+          title="Comment"
+        >
+          <MessageCircle className="w-6 h-6" />
+        </button>
+        <button
+          onClick={handleDownload}
+          className="text-charcoal-600 hover:text-charcoal-900 transition-colors p-2"
+          aria-label="Download"
+          title="Download original"
+        >
+          <Download className="w-6 h-6" />
+        </button>
+        <button
+          onClick={handleShare}
+          className="text-charcoal-600 hover:text-charcoal-900 transition-colors p-2"
+          aria-label="Share"
+          title="Share photo"
+        >
+          <Share2 className="w-6 h-6" />
+        </button>
+        <button
+          onClick={onClose}
+          className="text-charcoal-600 hover:text-charcoal-900 transition-colors p-2"
+          aria-label="Close"
+        >
+          <X className="w-6 h-6" />
+        </button>
+      </div>
 
       <button
         onClick={onPrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-cream-200 transition-all bg-white/10 backdrop-blur-sm rounded-full p-3 hover:bg-white/20 shadow-luxury"
+        className="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal-600 hover:text-charcoal-900 transition-colors p-2"
         aria-label="Previous"
       >
         <ChevronLeft className="w-8 h-8" strokeWidth={2} />
@@ -108,28 +168,41 @@ export default function Lightbox({ photos, currentIndex, onClose, onNext, onPrev
 
       <button
         onClick={onNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-cream-200 transition-all bg-white/10 backdrop-blur-sm rounded-full p-3 hover:bg-white/20 shadow-luxury"
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-charcoal-600 hover:text-charcoal-900 transition-colors p-2"
         aria-label="Next"
       >
         <ChevronRight className="w-8 h-8" strokeWidth={2} />
       </button>
 
+      {/* Image container with premium loading */}
       <div className="max-w-7xl max-h-screen p-4 flex items-center justify-center">
         <div className="relative max-w-full max-h-[90vh]">
+          {/* Loading skeleton with shimmer */}
+          {!isImageLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-full h-full max-w-4xl max-h-[80vh] bg-gradient-to-r from-charcoal-100 via-charcoal-200 to-charcoal-100 animate-shimmer bg-[length:200%_100%]" />
+              <Loader2 className="absolute w-12 h-12 text-charcoal-400 animate-spin" />
+            </div>
+          )}
+
+          {/* Image with smooth fade-in */}
           <Image
             src={currentPhoto.web_url}
             alt={currentPhoto.filename}
             width={currentPhoto.width || 1920}
             height={currentPhoto.height || 1280}
-            className="max-w-full max-h-[90vh] w-auto h-auto object-contain shadow-luxury"
+            className={`max-w-full max-h-[90vh] w-auto h-auto object-contain transition-opacity duration-500 ${
+              isImageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
             quality={90}
             priority
             sizes="100vw"
+            onLoad={() => setIsImageLoaded(true)}
           />
         </div>
       </div>
 
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-white/10 backdrop-blur-sm px-6 py-2 rounded-full font-serif text-sm">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-charcoal-600 bg-charcoal-100 px-6 py-2 rounded-full font-serif text-sm">
         {currentIndex + 1} / {photos.length}
       </div>
     </div>
