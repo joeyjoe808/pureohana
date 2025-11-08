@@ -3,6 +3,10 @@ import { Heading } from '@/components/ui/Heading'
 import { Container } from '@/components/ui/Container'
 import FeedbackClient from './FeedbackClient'
 
+// Force dynamic rendering to always fetch fresh data
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function FeedbackPage() {
   const supabase = await createServerClient()
 
@@ -43,11 +47,17 @@ export default async function FeedbackPage() {
   const photoIds = photos?.map(p => p.id) || []
 
   // Get all favorites with photo and gallery info
-  const { data: favorites } = await supabase
+  const { data: favorites, error: favoritesError } = await supabase
     .from('favorites')
     .select('*')
     .in('photo_id', photoIds)
     .order('created_at', { ascending: false })
+
+  console.log('📊 Feedback Page Data:')
+  console.log('  Gallery IDs:', galleryIds)
+  console.log('  Photo IDs:', photoIds.length, 'photos')
+  console.log('  Favorites fetched:', favorites?.length || 0)
+  if (favoritesError) console.error('  Favorites error:', favoritesError)
 
   // Get all comments with photo and gallery info
   const { data: comments } = await supabase
@@ -55,6 +65,8 @@ export default async function FeedbackPage() {
     .select('*')
     .in('photo_id', photoIds)
     .order('created_at', { ascending: false })
+
+  console.log('  Comments fetched:', comments?.length || 0)
 
   // Create lookup maps for photos and galleries
   const photoMap = new Map(photos?.map(p => [p.id, p]) || [])
@@ -70,6 +82,9 @@ export default async function FeedbackPage() {
       gallery
     }
   }).filter(f => f.photo && f.gallery) || []
+
+  console.log('  Enriched favorites:', enrichedFavorites.length)
+  console.log('  Sample favorite:', enrichedFavorites[0])
 
   // Enrich comments with photo and gallery data
   const enrichedComments = comments?.map(comment => {

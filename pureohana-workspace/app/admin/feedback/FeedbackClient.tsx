@@ -53,13 +53,38 @@ export default function FeedbackClient({ favorites, comments, galleries }: Feedb
 
   const supabase = createClient()
 
+  // Group favorites by photo and count them
+  const groupedFavorites = favorites.reduce((acc, fav) => {
+    const key = fav.photo_id
+    if (!acc[key]) {
+      acc[key] = {
+        photo: fav.photo,
+        gallery: fav.gallery,
+        count: 0,
+        latestFavorite: fav
+      }
+    }
+    acc[key].count++
+    // Keep the most recent favorite for timestamp display
+    if (new Date(fav.created_at) > new Date(acc[key].latestFavorite.created_at)) {
+      acc[key].latestFavorite = fav
+    }
+    return acc
+  }, {} as Record<string, {
+    photo: EnrichedFavorite['photo']
+    gallery: EnrichedFavorite['gallery']
+    count: number
+    latestFavorite: EnrichedFavorite
+  }>)
+
   // Filter data based on current filters
   const getFilteredFavorites = () => {
-    let filtered = favorites
+    let filtered = Object.values(groupedFavorites)
     if (selectedGallery !== 'all') {
       filtered = filtered.filter(f => f.gallery.id === selectedGallery)
     }
-    return filtered
+    // Sort by count (most favorited first)
+    return filtered.sort((a, b) => b.count - a.count)
   }
 
   const getFilteredComments = () => {
@@ -160,7 +185,7 @@ export default function FeedbackClient({ favorites, comments, galleries }: Feedb
                   : 'bg-charcoal-100 text-charcoal-700 hover:bg-charcoal-200'
               }`}
             >
-              All ({favorites.length + localComments.length})
+              All ({Object.keys(groupedFavorites).length + localComments.length})
             </button>
             <button
               onClick={() => setFilter('favorites')}
@@ -171,7 +196,7 @@ export default function FeedbackClient({ favorites, comments, galleries }: Feedb
               }`}
             >
               <Heart className="w-4 h-4" fill={filter === 'favorites' ? 'currentColor' : 'none'} />
-              Favorites ({favorites.length})
+              Favorites ({Object.keys(groupedFavorites).length})
             </button>
             <button
               onClick={() => setFilter('comments')}
@@ -237,27 +262,40 @@ export default function FeedbackClient({ favorites, comments, galleries }: Feedb
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {filteredFavorites.map(favorite => (
-                <div key={favorite.id} className="bg-white rounded-luxury shadow-luxury overflow-hidden hover:shadow-luxury-lg transition-shadow">
+              {filteredFavorites.map(grouped => (
+                <div key={grouped.photo.id} className="bg-white rounded-luxury shadow-luxury overflow-hidden hover:shadow-luxury-lg transition-shadow">
                   <div className="relative aspect-square bg-charcoal-100">
                     <Image
-                      src={favorite.photo.thumbnail_url}
-                      alt={favorite.photo.filename}
+                      src={grouped.photo.thumbnail_url}
+                      alt={grouped.photo.filename}
                       fill
                       className="object-cover"
                       sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />
-                    <div className="absolute top-2 right-2 bg-red-600 text-white p-1.5 rounded-full">
-                      <Heart className="w-4 h-4" fill="currentColor" />
+                    {/* Heart icon with count badge */}
+                    <div className="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full shadow-lg relative">
+                      <Heart className="w-5 h-5" fill="currentColor" />
+                      {grouped.count > 1 && (
+                        <span className="absolute -top-1 -right-1 bg-white text-red-600 text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold border-2 border-red-600">
+                          {grouped.count}
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className="p-3">
                     <p className="font-serif text-sm text-charcoal-900 font-semibold truncate mb-1">
-                      {favorite.gallery.title}
+                      {grouped.gallery.title}
                     </p>
-                    <p className="font-serif text-xs text-charcoal-500">
-                      {formatDistanceToNow(new Date(favorite.created_at), { addSuffix: true })}
-                    </p>
+                    <div className="flex items-center justify-between">
+                      <p className="font-serif text-xs text-charcoal-500">
+                        {formatDistanceToNow(new Date(grouped.latestFavorite.created_at), { addSuffix: true })}
+                      </p>
+                      {grouped.count > 1 && (
+                        <p className="font-serif text-xs text-red-600 font-semibold">
+                          {grouped.count} favorites
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}

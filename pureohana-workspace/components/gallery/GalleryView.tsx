@@ -1,13 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import { Download, Loader2, Heart, Share2, MessageCircle } from 'lucide-react'
+import { Download, Loader2 } from 'lucide-react'
 import JSZip from 'jszip'
 import type { Photo, Gallery } from '@/lib/supabase/types'
 import Lightbox from './Lightbox'
-import FavoriteButton from './FavoriteButton'
-import CommentButton from './CommentButton'
+import PhotoCard from './PhotoCard'
 
 interface GalleryViewProps {
   photos: Photo[]
@@ -163,95 +161,19 @@ export default function GalleryView({ photos, gallery }: GalleryViewProps) {
 
       {/* Pixieset-style masonry - CSS columns, preserves original aspect ratios */}
       <div className="columns-2 md:columns-3 lg:columns-4 gap-1">
-        {photos.map((photo, index) => {
-          const isLoaded = loadedImages.has(photo.id)
-
-          return (
-            <div
-              key={photo.id}
-              className="cursor-pointer group mb-1 break-inside-avoid"
-            >
-              <div className="relative overflow-hidden bg-charcoal-100" id={`photo-${photo.id}`}>
-                {/* Skeleton loader with shimmer */}
-                {!isLoaded && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-charcoal-100 via-charcoal-200 to-charcoal-100 animate-shimmer bg-[length:200%_100%] min-h-[200px]" />
-                )}
-
-                {/* Next.js Image with natural aspect ratio - optimized for masonry */}
-                <div onClick={() => setSelectedIndex(index)}>
-                  <Image
-                    src={photo.thumbnail_url}
-                    alt={photo.filename}
-                    width={400}
-                    height={400}
-                    className={`w-full h-auto transition-opacity duration-500 ${
-                      isLoaded ? 'opacity-100' : 'opacity-0'
-                    }`}
-                    loading={index < 12 ? 'eager' : 'lazy'}
-                    quality={85}
-                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    style={{ width: '100%', height: 'auto' }}
-                    onLoad={() => handleImageLoad(photo.id)}
-                  />
-                </div>
-
-                {/* Hidden but functional favorite and comment components */}
-                <div className="hidden">
-                  <FavoriteButton photoId={photo.id} galleryId={gallery.id} />
-                  <CommentButton photoId={photo.id} galleryId={gallery.id} />
-                </div>
-
-                {/* Pixieset-style hover icons at bottom right */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-3 flex items-center justify-end gap-3">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      const container = document.getElementById(`photo-${photo.id}`)
-                      const favoriteBtn = container?.querySelector('button[aria-label*="avorite"]') as HTMLButtonElement
-                      favoriteBtn?.click()
-                    }}
-                    className="text-white hover:text-red-400 transition-colors"
-                    title="Favorite"
-                  >
-                    <Heart className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      const container = document.getElementById(`photo-${photo.id}`)
-                      const commentBtn = container?.querySelector('button[aria-label*="comment" i]') as HTMLButtonElement
-                      commentBtn?.click()
-                    }}
-                    className="text-white hover:text-cream-200 transition-colors"
-                    title="Comment"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      handleDownloadPhoto(photo)
-                    }}
-                    className="text-white hover:text-cream-200 transition-colors"
-                    title="Download"
-                  >
-                    <Download className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      handleSharePhoto(photo)
-                    }}
-                    className="text-white hover:text-cream-200 transition-colors"
-                    title="Share"
-                  >
-                    <Share2 className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          )
-        })}
+        {photos.map((photo, index) => (
+          <PhotoCard
+            key={photo.id}
+            photo={photo}
+            galleryId={gallery.id}
+            index={index}
+            isLoaded={loadedImages.has(photo.id)}
+            onImageLoad={handleImageLoad}
+            onPhotoClick={() => setSelectedIndex(index)}
+            onDownload={handleDownloadPhoto}
+            onShare={handleSharePhoto}
+          />
+        ))}
       </div>
 
       {/* Download All Button - Fixed position */}

@@ -2,7 +2,12 @@ import { createServerClient } from '@/lib/supabase'
 import { Heading } from '@/components/ui/Heading'
 import { Container } from '@/components/ui/Container'
 import Link from 'next/link'
+import NextImage from 'next/image'
 import { Image, Heart, MessageSquare, Eye } from 'lucide-react'
+
+// Force dynamic rendering to always fetch fresh data
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function AdminDashboardPage() {
   const supabase = await createServerClient()
@@ -60,6 +65,50 @@ export default async function AdminDashboardPage() {
     .select('*', { count: 'exact', head: true })
     .in('photo_id', photoIds)
 
+  // Get favorite data with photo and gallery info for display
+  const { data: favoritesData } = await supabase
+    .from('favorites')
+    .select(`
+      id,
+      photo_id,
+      created_at,
+      photos!inner (
+        id,
+        filename,
+        thumbnail_url,
+        gallery_id,
+        galleries!inner (
+          id,
+          title,
+          slug
+        )
+      )
+    `)
+    .in('photo_id', photoIds)
+    .order('created_at', { ascending: false })
+
+  // Group favorites by photo and count them
+  const groupedFavorites = (favoritesData || []).reduce((acc, fav) => {
+    const photoId = fav.photo_id
+    if (!acc[photoId]) {
+      acc[photoId] = {
+        photo: fav.photos,
+        count: 0,
+        latestFavorite: fav
+      }
+    }
+    acc[photoId].count++
+    if (new Date(fav.created_at) > new Date(acc[photoId].latestFavorite.created_at)) {
+      acc[photoId].latestFavorite = fav
+    }
+    return acc
+  }, {} as Record<string, any>)
+
+  // Get top 6 most favorited photos
+  const topFavorites = Object.values(groupedFavorites)
+    .sort((a: any, b: any) => b.count - a.count)
+    .slice(0, 6)
+
   return (
     <Container className="py-8 sm:py-12">
       <div className="mb-8 sm:mb-12">
@@ -106,8 +155,56 @@ export default async function AdminDashboardPage() {
         </div>
       </div>
 
+      {/* Most Favorited Photos */}
+      {topFavorites.length > 0 && (
+        <div className="bg-white rounded-luxury-lg shadow-luxury p-6 sm:p-8 mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <Heading level={2}>Most Favorited Photos</Heading>
+            <Link
+              href="/admin/feedback"
+              className="font-serif text-sunset-600 hover:text-sunset-700 transition-colors"
+            >
+              View all
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {topFavorites.map((grouped: any) => (
+              <div
+                key={grouped.photo.id}
+                className="bg-white rounded-luxury shadow-luxury overflow-hidden hover:shadow-luxury-lg transition-shadow"
+              >
+                <div className="relative aspect-square bg-charcoal-100">
+                  <NextImage
+                    src={grouped.photo.thumbnail_url}
+                    alt={grouped.photo.filename}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                  />
+                  {/* Heart icon with count badge */}
+                  <div className="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full shadow-lg relative">
+                    <Heart className="w-4 h-4" fill="currentColor" />
+                    {grouped.count > 1 && (
+                      <span className="absolute -top-1 -right-1 bg-white text-red-600 text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold border-2 border-red-600">
+                        {grouped.count}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="p-2">
+                  <p className="font-serif text-xs text-charcoal-900 font-semibold truncate">
+                    {grouped.photo.galleries.title}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Recent Galleries */}
-      <div className="bg-white rounded-luxury-lg shadow-luxury p-8">
+      <div className="bg-white rounded-luxury-lg shadow-luxury p-6 sm:p-8">
         <div className="flex items-center justify-between mb-6">
           <Heading level={2}>Recent Galleries</Heading>
           <Link

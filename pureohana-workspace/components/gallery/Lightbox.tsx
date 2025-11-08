@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { X, ChevronLeft, ChevronRight, Download, Loader2, Heart, Share2, MessageCircle } from 'lucide-react'
 import type { Photo } from '@/lib/supabase/types'
-import FavoriteButton from './FavoriteButton'
+import { useFavorite } from '@/hooks/useFavorite'
 import CommentButton from './CommentButton'
 
 interface LightboxProps {
@@ -19,6 +19,7 @@ interface LightboxProps {
 export default function Lightbox({ photos, currentIndex, onClose, onNext, onPrev, galleryId }: LightboxProps) {
   const currentPhoto = photos[currentIndex]
   const [isImageLoaded, setIsImageLoaded] = useState(false)
+  const { isFavorited, count, toggleFavorite } = useFavorite(currentPhoto.id, galleryId)
 
   // Reset loading state when photo changes
   useEffect(() => {
@@ -101,25 +102,27 @@ export default function Lightbox({ photos, currentIndex, onClose, onNext, onPrev
 
   return (
     <div className="fixed inset-0 bg-white z-50 flex items-center justify-center" id="lightbox-container">
-      {/* Hidden but functional favorite and comment components */}
+      {/* Hidden but functional comment component */}
       <div className="hidden">
-        <FavoriteButton photoId={currentPhoto.id} galleryId={galleryId} />
         <CommentButton photoId={currentPhoto.id} galleryId={galleryId} />
       </div>
 
       {/* Top right icons - Pixieset style */}
       <div className="absolute top-4 right-4 flex items-center gap-3 z-50">
         <button
-          onClick={() => {
-            const container = document.getElementById('lightbox-container')
-            const favoriteBtn = container?.querySelector('button[aria-label*="avorite"]') as HTMLButtonElement
-            favoriteBtn?.click()
-          }}
-          className="text-charcoal-600 hover:text-red-500 transition-colors p-2"
+          onClick={toggleFavorite}
+          className={`transition-colors p-2 relative ${
+            isFavorited ? 'text-red-500' : 'text-charcoal-600 hover:text-red-500'
+          }`}
           aria-label="Favorite Photo"
           title="Favorite"
         >
-          <Heart className="w-6 h-6" />
+          <Heart className="w-6 h-6" fill={isFavorited ? 'currentColor' : 'none'} />
+          {count > 0 && (
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center font-semibold text-[10px]">
+              {count}
+            </span>
+          )}
         </button>
         <button
           onClick={() => {
