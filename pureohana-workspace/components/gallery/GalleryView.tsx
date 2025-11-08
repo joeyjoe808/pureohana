@@ -19,6 +19,24 @@ export default function GalleryView({ photos, gallery }: GalleryViewProps) {
   const [downloadProgress, setDownloadProgress] = useState({ current: 0, total: 0 })
   const [showProgressBar, setShowProgressBar] = useState(true)
 
+  // Handle shared photo URL parameter (?photo=id)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search)
+      const photoId = params.get('photo')
+
+      if (photoId) {
+        // Find the index of the photo with this ID
+        const index = photos.findIndex(p => p.id === photoId)
+        if (index !== -1) {
+          setSelectedIndex(index)
+          // Clean up URL without reloading
+          window.history.replaceState({}, '', window.location.pathname + window.location.search.replace(/[?&]photo=[^&]+/, '').replace(/^&/, '?'))
+        }
+      }
+    }
+  }, [photos])
+
   const handleImageLoad = (photoId: string) => {
     setLoadedImages(prev => new Set(prev).add(photoId))
   }
