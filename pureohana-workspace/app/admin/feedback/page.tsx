@@ -46,27 +46,40 @@ export default async function FeedbackPage() {
 
   const photoIds = photos?.map(p => p.id) || []
 
-  // Get all favorites with photo and gallery info
+  // Get all favorites - filter by gallery instead of 444 photo IDs
   const { data: favorites, error: favoritesError } = await supabase
     .from('favorites')
     .select('*')
-    .in('photo_id', photoIds)
+    .in('gallery_id', galleryIds)
     .order('created_at', { ascending: false })
 
   console.log('📊 Feedback Page Data:')
   console.log('  Gallery IDs:', galleryIds)
   console.log('  Photo IDs:', photoIds.length, 'photos')
   console.log('  Favorites fetched:', favorites?.length || 0)
-  if (favoritesError) console.error('  Favorites error:', favoritesError)
+  if (favoritesError) {
+    console.error('  ❌ Favorites error details:')
+    console.error('    Message:', favoritesError.message)
+    console.error('    Code:', favoritesError.code)
+    console.error('    Details:', favoritesError.details)
+    console.error('    Hint:', favoritesError.hint)
+  }
 
-  // Get all comments with photo and gallery info
-  const { data: comments } = await supabase
+  // Get all comments - filter by gallery instead of 444 photo IDs
+  const { data: comments, error: commentsError } = await supabase
     .from('comments')
     .select('*')
-    .in('photo_id', photoIds)
+    .in('gallery_id', galleryIds)
     .order('created_at', { ascending: false })
 
   console.log('  Comments fetched:', comments?.length || 0)
+  if (commentsError) {
+    console.error('  ❌ Comments error details:')
+    console.error('    Message:', commentsError.message)
+    console.error('    Code:', commentsError.code)
+    console.error('    Details:', commentsError.details)
+    console.error('    Hint:', commentsError.hint)
+  }
 
   // Create lookup maps for photos and galleries
   const photoMap = new Map(photos?.map(p => [p.id, p]) || [])
@@ -86,7 +99,7 @@ export default async function FeedbackPage() {
   console.log('  Enriched favorites:', enrichedFavorites.length)
   console.log('  Sample favorite:', enrichedFavorites[0])
 
-  // Enrich comments with photo and gallery data
+  // Enrich comments with photo and gallery data (keep all comments even if photo missing)
   const enrichedComments = comments?.map(comment => {
     const photo = photoMap.get(comment.photo_id)
     const gallery = photo ? galleryMap.get(photo.gallery_id) : null
@@ -95,7 +108,9 @@ export default async function FeedbackPage() {
       photo,
       gallery
     }
-  }).filter(c => c.photo && c.gallery) || []
+  }) || []
+
+  console.log('  Enriched comments:', enrichedComments.length)
 
   return (
     <Container className="py-12">
