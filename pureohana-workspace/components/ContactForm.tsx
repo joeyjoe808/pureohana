@@ -154,8 +154,17 @@ export default function ContactForm() {
       </div>
 
       {submitStatus === 'success' && (
-        <div className="bg-ocean-50 border border-ocean-200 text-ocean-900 px-4 py-3 rounded-lg">
-          Thank you! We'll be in touch soon.
+        <div className="bg-ocean-50 border border-ocean-200 text-ocean-900 px-4 py-3 rounded-lg space-y-3">
+          <p className="font-semibold">Thank you! We'll be in touch soon.</p>
+          <p className="text-sm">Want to schedule a consultation call right away?</p>
+          <a
+            href="https://calendly.com/pureohanatreasures/new-meeting"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-4 py-2 bg-ocean-600 text-white rounded-lg hover:bg-ocean-700 transition-colors text-sm font-medium"
+          >
+            Schedule Consultation
+          </a>
         </div>
       )}
 
