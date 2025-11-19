@@ -6,3 +6,6 @@
 
 # Local Netlify folder
 .netlify
+
+# MCP configuration (contains API keys)
+.mcp.json

@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from 'react'
 import { Button } from '@/components/ui/Button'
+import { trackContactFormSubmission } from '@/lib/gtag'
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -21,6 +22,13 @@ export default function ContactForm() {
     setIsSubmitting(true)
     setSubmitStatus('idle')
 
+    console.log('[Contact Form] Submission started:', {
+      name: formData.name,
+      email: formData.email,
+      eventType: formData.eventType,
+      timestamp: new Date().toISOString()
+    })
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -28,7 +36,17 @@ export default function ContactForm() {
         body: JSON.stringify(formData)
       })
 
-      if (!response.ok) throw new Error('Failed to submit')
+      if (!response.ok) {
+        console.error('[Contact Form] API response not OK:', response.status, response.statusText)
+        throw new Error('Failed to submit')
+      }
+
+      console.log('[Contact Form] Successfully submitted to database')
+
+      // Track Google Ads conversion
+      console.log('[Contact Form] Triggering Google Ads conversion tracking...')
+      trackContactFormSubmission()
+      console.log('[Contact Form] Google Ads conversion event fired')
 
       setSubmitStatus('success')
       setFormData({
@@ -40,8 +58,10 @@ export default function ContactForm() {
         vision: '',
         referral: ''
       })
+
+      console.log('[Contact Form] Form reset complete - submission flow finished successfully')
     } catch (error) {
-      console.error('Form submission error:', error)
+      console.error('[Contact Form] Submission error:', error)
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
