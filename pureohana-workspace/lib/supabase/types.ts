@@ -188,6 +188,50 @@ export interface BlogPost {
   updated_at: string // ISO timestamp
 }
 
+/**
+ * Promotional offers for photography services
+ */
+export interface Promotion {
+  id: string // UUID
+  photographer_id: string // UUID
+
+  // Basic info
+  title: string
+  slug: string // URL-friendly identifier
+  tagline: string | null
+
+  // Content
+  description: string
+  terms_conditions: string | null
+  highlights: string[] | null // Array of key selling points
+
+  // Pricing
+  original_price: string | null
+  promotional_price: string
+  savings_text: string | null // e.g., "Save $500" or "30% Off"
+
+  // Images
+  hero_image_url: string | null
+  secondary_image_url: string | null
+
+  // Dates
+  valid_from: string | null // ISO timestamp
+  valid_until: string | null // ISO timestamp
+
+  // Status & Settings
+  is_active: boolean
+  is_featured: boolean
+  service_category: string | null // e.g., "Wedding", "Family", "Maternity"
+
+  // Tracking
+  view_count: number
+  inquiry_count: number
+
+  // Timestamps
+  created_at: string // ISO timestamp
+  updated_at: string // ISO timestamp
+}
+
 // ============================================
 // INSERT TYPES (for creating new records)
 // ============================================
@@ -203,6 +247,7 @@ export type CommentInsert = Omit<Comment, 'id' | 'created_at' | 'is_read' | 'pho
 export type UploadSessionInsert = Omit<UploadSession, 'id' | 'created_at' | 'completed_photos' | 'failed_photos' | 'status'>
 export type ContactSubmissionInsert = Omit<ContactSubmission, 'id' | 'created_at' | 'is_read' | 'photographer_notes' | 'status' | 'responded_at'>
 export type BlogPostInsert = Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>
+export type PromotionInsert = Omit<Promotion, 'id' | 'created_at' | 'updated_at' | 'view_count' | 'inquiry_count'>
 
 // ============================================
 // UPDATE TYPES (for partial updates)
@@ -215,6 +260,7 @@ export type CommentUpdate = Partial<Omit<Comment, 'id' | 'created_at'>>
 export type UploadSessionUpdate = Partial<Omit<UploadSession, 'id' | 'created_at'>>
 export type ContactSubmissionUpdate = Partial<Omit<ContactSubmission, 'id' | 'created_at'>>
 export type BlogPostUpdate = Partial<Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>>
+export type PromotionUpdate = Partial<Omit<Promotion, 'id' | 'created_at' | 'updated_at'>>
 
 // ============================================
 // JOINED TYPES (for common queries)
@@ -274,6 +320,7 @@ export type TableName =
   | 'upload_sessions'
   | 'contact_submissions'
   | 'blog_posts'
+  | 'promotions'
 
 /**
  * Storage bucket names (type-safe)
@@ -325,6 +372,11 @@ export interface Database {
         Row: BlogPost
         Insert: BlogPostInsert
         Update: BlogPostUpdate
+      }
+      promotions: {
+        Row: Promotion
+        Insert: PromotionInsert
+        Update: PromotionUpdate
       }
     }
   }

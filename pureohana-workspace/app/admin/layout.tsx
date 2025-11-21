@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createServerClient } from '@/lib/supabase'
 import Link from 'next/link'
-import { LogOut, LayoutDashboard, Image, Upload, Images, FileText, Briefcase, Info, Home, MessagesSquare, Inbox } from 'lucide-react'
+import { LogOut, LayoutDashboard, Image, Upload, Images, FileText, Briefcase, Info, Home, MessagesSquare, Inbox, Tag } from 'lucide-react'
 
 async function AdminNav() {
   return (
@@ -44,6 +44,10 @@ async function AdminNav() {
             <Link href="/admin/services" className="flex items-center gap-1 sm:gap-2 text-cream-100 hover:text-sunset-400 transition-colors font-serif text-sm whitespace-nowrap">
               <Briefcase size={16} className="flex-shrink-0" />
               <span className="hidden lg:inline">Services</span>
+            </Link>
+            <Link href="/admin/promotions" className="flex items-center gap-1 sm:gap-2 text-cream-100 hover:text-sunset-400 transition-colors font-serif text-sm whitespace-nowrap">
+              <Tag size={16} className="flex-shrink-0" />
+              <span className="hidden lg:inline">Promotions</span>
             </Link>
             <Link href="/admin/about" className="flex items-center gap-1 sm:gap-2 text-cream-100 hover:text-sunset-400 transition-colors font-serif text-sm whitespace-nowrap">
               <Info size={16} className="flex-shrink-0" />

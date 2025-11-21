@@ -1,10 +1,14 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState, FormEvent, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { trackContactFormSubmission } from '@/lib/gtag'
 
 export default function ContactForm() {
+  const searchParams = useSearchParams()
+  const promoSlug = searchParams.get('promo')
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -12,8 +16,15 @@ export default function ContactForm() {
     eventType: '',
     eventDate: '',
     vision: '',
-    referral: ''
+    referral: promoSlug ? `Promotion: ${promoSlug}` : ''
   })
+
+  // Update referral if promo param changes
+  useEffect(() => {
+    if (promoSlug && !formData.referral) {
+      setFormData(prev => ({ ...prev, referral: `Promotion: ${promoSlug}` }))
+    }
+  }, [promoSlug, formData.referral])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
