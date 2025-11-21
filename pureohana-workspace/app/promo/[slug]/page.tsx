@@ -187,7 +187,7 @@ export default async function PromoPage({ params }: PromoPageProps) {
               What's Included
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
-              {promo.highlights.map((highlight, index) => (
+              {promo.highlights.map((highlight: string, index: number) => (
                 <div
                   key={index}
                   className="flex items-start gap-3 bg-white p-4 rounded-luxury-lg shadow-soft"

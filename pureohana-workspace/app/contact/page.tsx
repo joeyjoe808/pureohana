@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { Suspense } from 'react'
 import ContactForm from '@/components/ContactForm'
 import { Heading } from '@/components/ui/Heading'
 import { Container } from '@/components/ui/Container'
@@ -20,7 +21,9 @@ export default function ContactPage() {
             Tell us about your vision and we'll make it a reality
           </p>
 
-          <ContactForm />
+          <Suspense fallback={<div className="text-center py-12">Loading...</div>}>
+            <ContactForm />
+          </Suspense>
 
           <div className="mt-12 text-center">
             <p className="text-charcoal-600 mb-2">Or reach us directly:</p>
