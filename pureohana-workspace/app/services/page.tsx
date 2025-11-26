@@ -5,6 +5,7 @@ import { Heading } from '@/components/ui/Heading'
 import { Container } from '@/components/ui/Container'
 import { Button } from '@/components/ui/Button'
 import { createServerClient } from '@/lib/supabase'
+import { getServiceSchema, getBreadcrumbSchema } from '@/lib/structured-data'
 
 export const metadata: Metadata = {
   title: 'Photography Services | Pure Ohana Treasures',
@@ -58,8 +59,39 @@ export default async function ServicesPage() {
   ]
 
   const services = dbServices && dbServices.length > 0 ? dbServices : placeholderServices
+
+  // Breadcrumbs
+  const breadcrumbs = [
+    { name: 'Home', url: 'https://pureohanatreasures.com' },
+    { name: 'Services', url: 'https://pureohanatreasures.com/services' },
+  ]
+
   return (
     <main className="min-h-screen bg-cream-50">
+      {/* Structured Data - Breadcrumbs */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getBreadcrumbSchema(breadcrumbs)) }}
+      />
+
+      {/* Structured Data - Services */}
+      {services.map((service, idx) => (
+        <script
+          key={service.id || idx}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              getServiceSchema({
+                name: service.title,
+                description: service.description,
+                price: service.starting_price,
+                image: service.cover_image_url,
+              })
+            ),
+          }}
+        />
+      ))}
+
       <Container className="py-20">
         <Heading level={1} className="text-center mb-4">Our Services</Heading>
         <p className="text-xl text-center text-charcoal-600 font-serif mb-16 max-w-3xl mx-auto">

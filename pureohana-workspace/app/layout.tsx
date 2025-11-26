@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import Script from "next/script";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { getOrganizationSchema } from "@/lib/structured-data";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -68,6 +69,12 @@ export default function RootLayout({
             gtag('config', 'AW-17740589628');
           `}
         </Script>
+
+        {/* Structured Data - Organization/LocalBusiness */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(getOrganizationSchema()) }}
+        />
 
         <Navigation />
         <div className="pt-20">

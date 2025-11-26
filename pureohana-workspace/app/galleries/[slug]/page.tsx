@@ -4,6 +4,7 @@ import type { Photo, Gallery } from '@/lib/supabase'
 import type { Metadata } from 'next'
 import GalleryView from '@/components/gallery/GalleryView'
 import NextImage from 'next/image'
+import { getImageGallerySchema, getBreadcrumbSchema, getImageObjectSchema } from '@/lib/structured-data'
 
 interface PageProps {
   params: Promise<{
@@ -103,7 +104,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
 
 export default async function GalleryPage({ params, searchParams }: PageProps) {
   const { slug } = await params
-  const { key } = await searchParams
+  const { key, photo: photoId } = await searchParams
   const supabase = await createServerClient()
 
   // Fetch gallery by slug
@@ -152,8 +153,37 @@ export default async function GalleryPage({ params, searchParams }: PageProps) {
     .update({ view_count: gallery.view_count + 1 })
     .eq('id', gallery.id)
 
+  // Generate structured data
+  const breadcrumbs = [
+    { name: 'Home', url: 'https://pureohanatreasures.com' },
+    { name: 'Galleries', url: 'https://pureohanatreasures.com/access' },
+    { name: gallery.title, url: `https://pureohanatreasures.com/galleries/${slug}?key=${key}` },
+  ]
+
+  // Get the specific photo if photoId is provided
+  const sharedPhoto = photoId ? galleryPhotos.find(p => p.id === photoId) : null
+
   return (
     <div className="min-h-screen bg-cream-50">
+      {/* Structured Data - Breadcrumbs */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getBreadcrumbSchema(breadcrumbs)) }}
+      />
+
+      {/* Structured Data - Gallery or Single Photo */}
+      {sharedPhoto ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(getImageObjectSchema(sharedPhoto, gallery.title)) }}
+        />
+      ) : (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(getImageGallerySchema(gallery, galleryPhotos)) }}
+        />
+      )}
+
       {/* Hero Section with Cover Image */}
       {gallery.cover_photo_url && (
         <div className="relative h-screen w-full flex items-center justify-center overflow-hidden">
