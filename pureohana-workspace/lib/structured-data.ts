@@ -182,14 +182,3 @@ export function getImageObjectSchema(photo: Photo, galleryTitle: string) {
   }
 }
 
-/**
- * Helper to render JSON-LD script tag
- */
-export function renderStructuredData(data: any) {
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-    />
-  )
-}
