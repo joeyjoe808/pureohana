@@ -83,41 +83,51 @@ export default function Lightbox({ photos, currentIndex, onClose, onNext, onPrev
   }, [onClose, onNext, onPrev, currentPhoto])
 
   return (
-    <div className="fixed inset-0 bg-white z-50 flex items-center justify-center" id="lightbox-container">
+    <div
+      className="fixed inset-0 bg-white z-50 flex items-center justify-center"
+      id="lightbox-container"
+      onClick={onClose}
+    >
       {/* Hidden but functional comment component */}
       <div className="hidden">
         <CommentButton photoId={currentPhoto.id} galleryId={galleryId} />
       </div>
 
-      {/* Close button - Top right only */}
-      <div className="absolute top-4 right-4 z-[70]">
+      {/* Close button - Below header, simple black X */}
+      <div className="absolute top-24 right-4 z-[70]">
         <button
           onClick={onClose}
-          className="text-charcoal-600 hover:text-charcoal-900 transition-colors p-2"
+          className="text-charcoal-900 hover:text-charcoal-600 transition-colors p-2"
           aria-label="Close"
         >
-          <X className="w-6 h-6" />
+          <X className="w-8 h-8" strokeWidth={3} />
         </button>
       </div>
 
       <button
-        onClick={onPrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal-600 hover:text-charcoal-900 transition-colors p-2"
+        onClick={(e) => {
+          e.stopPropagation()
+          onPrev()
+        }}
+        className="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal-600 hover:text-charcoal-900 transition-colors p-2 z-[70]"
         aria-label="Previous"
       >
         <ChevronLeft className="w-8 h-8" strokeWidth={2} />
       </button>
 
       <button
-        onClick={onNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 text-charcoal-600 hover:text-charcoal-900 transition-colors p-2"
+        onClick={(e) => {
+          e.stopPropagation()
+          onNext()
+        }}
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-charcoal-600 hover:text-charcoal-900 transition-colors p-2 z-[70]"
         aria-label="Next"
       >
         <ChevronRight className="w-8 h-8" strokeWidth={2} />
       </button>
 
       {/* Image container with premium loading */}
-      <div className="max-w-7xl max-h-screen p-4 flex items-center justify-center">
+      <div className="max-w-7xl max-h-screen p-4 flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
         <div className="relative max-w-full max-h-[90vh]">
           {/* Loading skeleton with shimmer */}
           {!isImageLoaded && (
@@ -145,7 +155,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onNext, onPrev
       </div>
 
       {/* Action buttons - Bottom center */}
-      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-[70]">
+      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-[70]" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center gap-4 bg-white/95 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg border border-charcoal-200">
           <button
             onClick={toggleFavorite}
@@ -194,7 +204,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onNext, onPrev
       </div>
 
       {/* Photo counter - Bottom center below action buttons */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-charcoal-600 bg-charcoal-100 px-6 py-2 rounded-full font-serif text-sm z-[70]">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-charcoal-600 bg-charcoal-100 px-6 py-2 rounded-full font-serif text-sm z-[70]" onClick={(e) => e.stopPropagation()}>
         {currentIndex + 1} / {photos.length}
       </div>
     </div>
