@@ -70,7 +70,8 @@ export function getOrganizationSchema() {
     },
     sameAs: [
       'https://www.instagram.com/pureohanatreasures/',
-      // Add Facebook, Twitter when available
+      'https://www.facebook.com/pureohanatreasures/',
+      'https://twitter.com/pureohana',
     ],
   }
 }

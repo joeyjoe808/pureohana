@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Instagram, Facebook, Mail } from 'lucide-react'
+import { Instagram, Facebook, Twitter, Mail } from 'lucide-react'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -60,11 +60,22 @@ export default function Footer() {
                 <Instagram size={24} />
               </a>
               <a
-                href="#"
+                href="https://www.facebook.com/pureohanatreasures/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-cream-300 hover:text-cream-50 transition-colors p-3 min-w-[48px] min-h-[48px] flex items-center justify-center"
                 aria-label="Follow us on Facebook"
               >
                 <Facebook size={24} />
+              </a>
+              <a
+                href="https://twitter.com/pureohana"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-cream-300 hover:text-cream-50 transition-colors p-3 min-w-[48px] min-h-[48px] flex items-center justify-center"
+                aria-label="Follow us on Twitter"
+              >
+                <Twitter size={24} />
               </a>
             </div>
           </div>
