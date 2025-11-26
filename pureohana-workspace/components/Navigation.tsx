@@ -98,7 +98,7 @@ export default function Navigation() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className={'block py-3 font-serif text-lg transition-colors ' + (
+                className={'block py-4 font-serif text-lg transition-colors min-h-[48px] flex items-center ' + (
                   pathname === link.href
                     ? 'text-sunset-400 font-semibold'
                     : 'text-white hover:text-sunset-400'
@@ -113,7 +113,7 @@ export default function Navigation() {
                 href="/admin"
                 onClick={() => setIsOpen(false)}
                 className={
-                  'flex items-center gap-2 py-3 font-serif text-lg transition-colors ' +
+                  'flex items-center gap-2 py-4 font-serif text-lg transition-colors min-h-[48px] ' +
                   (pathname?.startsWith('/admin')
                     ? 'text-sunset-400 font-semibold'
                     : 'text-white hover:text-sunset-400')

@@ -52,25 +52,13 @@ export default function GalleryView({ photos, gallery }: GalleryViewProps) {
     }
   }, [isFullyLoaded])
 
-  // Download single photo
+  // Download single photo - ALWAYS download, never share
   const handleDownloadPhoto = async (photo: Photo) => {
     try {
       const response = await fetch(photo.original_url)
       const blob = await response.blob()
 
-      // iOS/Safari: Use Web Share API
-      if (navigator.canShare && navigator.share) {
-        const file = new File([blob], photo.filename, { type: blob.type })
-        if (navigator.canShare({ files: [file] })) {
-          await navigator.share({
-            files: [file],
-            title: photo.filename,
-          })
-          return
-        }
-      }
-
-      // Desktop: Standard download
+      // Standard download for all devices
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url

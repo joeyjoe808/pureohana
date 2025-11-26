@@ -20,12 +20,12 @@ export default function Footer() {
           <div>
             <h4 className="font-serif text-lg mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              <li><Link href="/about" className="text-cream-300 hover:text-cream-50 transition-colors text-sm">About</Link></li>
-              <li><Link href="/services" className="text-cream-300 hover:text-cream-50 transition-colors text-sm">Services</Link></li>
-              <li><Link href="/portfolio" className="text-cream-300 hover:text-cream-50 transition-colors text-sm">Portfolio</Link></li>
-              <li><Link href="/blog" className="text-cream-300 hover:text-cream-50 transition-colors text-sm">Blog</Link></li>
-              <li><Link href="/contact" className="text-cream-300 hover:text-cream-50 transition-colors text-sm">Contact</Link></li>
-              <li><Link href="/privacy" className="text-cream-300 hover:text-cream-50 transition-colors text-sm">Privacy Policy</Link></li>
+              <li><Link href="/about" className="inline-block text-cream-300 hover:text-cream-50 transition-colors text-sm py-2 min-h-[48px] flex items-center">About</Link></li>
+              <li><Link href="/services" className="inline-block text-cream-300 hover:text-cream-50 transition-colors text-sm py-2 min-h-[48px] flex items-center">Services</Link></li>
+              <li><Link href="/portfolio" className="inline-block text-cream-300 hover:text-cream-50 transition-colors text-sm py-2 min-h-[48px] flex items-center">Portfolio</Link></li>
+              <li><Link href="/blog" className="inline-block text-cream-300 hover:text-cream-50 transition-colors text-sm py-2 min-h-[48px] flex items-center">Blog</Link></li>
+              <li><Link href="/contact" className="inline-block text-cream-300 hover:text-cream-50 transition-colors text-sm py-2 min-h-[48px] flex items-center">Contact</Link></li>
+              <li><Link href="/privacy" className="inline-block text-cream-300 hover:text-cream-50 transition-colors text-sm py-2 min-h-[48px] flex items-center">Privacy Policy</Link></li>
             </ul>
           </div>
 
@@ -33,9 +33,9 @@ export default function Footer() {
           <div>
             <h4 className="font-serif text-lg mb-4">Contact</h4>
             <ul className="space-y-2 text-cream-300 text-sm">
-              <li className="flex items-start gap-2">
-                <Mail size={16} className="mt-1 flex-shrink-0" />
-                <a href="mailto:pureohanatreasures@gmail.com" className="hover:text-cream-50 transition-colors">
+              <li className="flex items-center gap-2 min-h-[48px]">
+                <Mail size={16} className="flex-shrink-0" />
+                <a href="mailto:pureohanatreasures@gmail.com" className="hover:text-cream-50 transition-colors py-2 flex items-center">
                   pureohanatreasures@gmail.com
                 </a>
               </li>
@@ -49,19 +49,19 @@ export default function Footer() {
           {/* Social */}
           <div>
             <h4 className="font-serif text-lg mb-4">Follow Us</h4>
-            <div className="flex gap-4">
-              <a 
-                href="https://www.instagram.com/pureohanatreasures/" 
-                target="_blank" 
+            <div className="flex gap-2">
+              <a
+                href="https://www.instagram.com/pureohanatreasures/"
+                target="_blank"
                 rel="noopener noreferrer"
-                className="text-cream-300 hover:text-cream-50 transition-colors"
+                className="text-cream-300 hover:text-cream-50 transition-colors p-3 min-w-[48px] min-h-[48px] flex items-center justify-center"
                 aria-label="Follow us on Instagram"
               >
                 <Instagram size={24} />
               </a>
-              <a 
-                href="#" 
-                className="text-cream-300 hover:text-cream-50 transition-colors"
+              <a
+                href="#"
+                className="text-cream-300 hover:text-cream-50 transition-colors p-3 min-w-[48px] min-h-[48px] flex items-center justify-center"
                 aria-label="Follow us on Facebook"
               >
                 <Facebook size={24} />
