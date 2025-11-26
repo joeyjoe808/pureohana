@@ -40,6 +40,29 @@ export default async function HomePage() {
     contact_email: 'pureohanatreasures@gmail.com',
   }
 
+  // Fetch hero photo
+  const { data: heroPlacement } = await supabase
+    .from('photo_placements')
+    .select(`
+      photos (
+        web_url,
+        filename
+      )
+    `)
+    .eq('section_key', 'homepage_hero')
+    .eq('is_active', true)
+    .limit(1)
+    .single()
+
+  // Handle case where photos might be an array or single object
+  const heroPhotoData = heroPlacement?.photos
+  const heroImage = heroPhotoData
+    ? (Array.isArray(heroPhotoData) ? heroPhotoData[0] : heroPhotoData)
+    : {
+        web_url: "https://mnsienbfqpbdfbqefmft.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg",
+        filename: "Luxury Hawaii Wedding Photography"
+      }
+
   // Fetch photos for each grid position
   const gridSections = ['homepage_grid_1', 'homepage_grid_2', 'homepage_grid_3', 'homepage_grid_4']
 
@@ -64,22 +87,22 @@ export default async function HomePage() {
 
   const gridPhotosResults = await Promise.all(gridPhotosPromises)
 
-  // Fallback images if no photos assigned
+  // Fallback images if no photos assigned (using correct Supabase domain)
   const placeholderImages = [
     {
-      web_url: "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/ashley%20looking%20into%20isaiahs%20eyes.jpg",
+      web_url: "https://mnsienbfqpbdfbqefmft.supabase.co/storage/v1/object/public/pureohanatreasures/ashley%20looking%20into%20isaiahs%20eyes.jpg",
       filename: "Luxury Wedding Couple Portrait"
     },
     {
-      web_url: "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/rosaries-grad-group.jpg",
+      web_url: "https://mnsienbfqpbdfbqefmft.supabase.co/storage/v1/object/public/pureohanatreasures/rosaries-grad-group.jpg",
       filename: "Family Celebration Photography"
     },
     {
-      web_url: "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-03371.jpg",
+      web_url: "https://mnsienbfqpbdfbqefmft.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-03371.jpg",
       filename: "Hawaii Wedding Ceremony"
     },
     {
-      web_url: "https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg",
+      web_url: "https://mnsienbfqpbdfbqefmft.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg",
       filename: "Sunset Wedding Photography"
     }
   ]
@@ -93,8 +116,8 @@ export default async function HomePage() {
       <section className="relative h-screen w-full overflow-hidden pt-20">
         <div className="absolute inset-0 -mt-20">
           <Image
-            src="https://ujpvlaaitdudcawgcyik.supabase.co/storage/v1/object/public/pureohanatreasures/untitled-9870.jpg"
-            alt="Luxury Hawaii Wedding Photography"
+            src={heroImage.web_url}
+            alt={heroImage.filename || "Luxury Hawaii Wedding Photography"}
             fill
             priority
             className="object-cover opacity-90"

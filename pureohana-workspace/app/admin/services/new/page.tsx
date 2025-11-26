@@ -192,6 +192,7 @@ export default function NewServicePage() {
                     alt="Cover image preview"
                     fill
                     className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 896px"
                   />
                   <button
                     type="button"

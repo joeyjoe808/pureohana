@@ -10,17 +10,33 @@ interface PhotoWithPlacements extends Photo {
     sort_order: number
     is_active: boolean
   }>
+  galleries?: {
+    id: string
+    title: string
+    slug: string
+  }
 }
 
 export default async function PhotoLibraryPage() {
   const supabase = await createServerClient()
 
-  // Try to fetch photos with placement information
+  // Fetch all galleries for filtering
+  const { data: galleries } = await supabase
+    .from('galleries')
+    .select('id, title, slug')
+    .order('created_at', { ascending: false })
+
+  // Try to fetch photos with placement information and gallery
   let { data: photos, error } = await supabase
     .from('photos')
     .select(`
       *,
-      placements:photo_placements(section_key, sort_order, is_active)
+      placements:photo_placements(section_key, sort_order, is_active),
+      galleries (
+        id,
+        title,
+        slug
+      )
     `)
     .order('created_at', { ascending: false })
 
@@ -119,7 +135,7 @@ export default async function PhotoLibraryPage() {
       </div>
 
       {/* Photo Grid */}
-      <PhotoLibraryGrid photos={photosWithPlacements} />
+      <PhotoLibraryGrid photos={photosWithPlacements} galleries={galleries || []} />
     </Container>
   )
 }
