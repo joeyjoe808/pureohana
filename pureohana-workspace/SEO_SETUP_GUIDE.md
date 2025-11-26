@@ -31,17 +31,15 @@ This guide covers the remaining SEO optimizations that require manual setup outs
    - Website: https://pureohanatreasures.com
 6. **Update the website**: Replace `https://www.facebook.com/pureohanatreasures/` in [components/Footer.tsx](components/Footer.tsx) with your actual Facebook page URL
 
-#### Create Twitter/X Account
-1. Go to [twitter.com/i/flow/signup](https://twitter.com/i/flow/signup)
-2. Choose handle: `@pureohanatreasures` (or similar if taken)
-3. Set up profile:
-   - **Name**: Pure Ohana Treasures
-   - **Bio**: Luxury photography in Hawaii 📸 | Family portraits, couples & events across the islands 🌺 | Capturing life's treasures with aloha | 📍 Aiea, Oahu
-   - **Website**: https://pureohanatreasures.com
-   - **Location**: Aiea, Hawaii
-4. Upload your logo as profile picture
-5. Upload a beautiful cover photo showcasing your work
-6. **Update the website**: Replace `https://twitter.com/pureohana` in [components/Footer.tsx](components/Footer.tsx) with your actual Twitter URL
+#### Optimize Twitter/X Account
+You already have Twitter at [@pure_ohana_808](https://x.com/pure_ohana_808) - nice! Let's make sure it's fully optimized:
+- [ ] Profile complete with business name and professional photo
+- [ ] Bio includes: Luxury photography in Hawaii 📸 | Family portraits, couples & events 🌺 | 📍 Aiea, Oahu
+- [ ] Website link points to https://pureohanatreasures.com
+- [ ] Location set to Aiea, Hawaii
+- [ ] Cover photo showcases your best work
+- [ ] Pin an important tweet (like a portfolio highlight or special offer)
+- [ ] Tweet regularly with location tags and relevant hashtags (#HawaiiPhotography, #OahuPhotographer, etc.)
 
 #### Optimize Instagram Profile
 You already have Instagram! Make sure it's fully optimized:

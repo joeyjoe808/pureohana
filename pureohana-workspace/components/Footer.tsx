@@ -69,7 +69,7 @@ export default function Footer() {
                 <Facebook size={24} />
               </a>
               <a
-                href="https://twitter.com/pureohana"
+                href="https://x.com/pure_ohana_808"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-cream-300 hover:text-cream-50 transition-colors p-3 min-w-[48px] min-h-[48px] flex items-center justify-center"
