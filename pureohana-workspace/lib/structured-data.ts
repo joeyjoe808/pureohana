@@ -70,7 +70,7 @@ export function getOrganizationSchema() {
     },
     sameAs: [
       'https://www.instagram.com/pureohanatreasures/',
-      'https://www.facebook.com/profile.php?id=61584106241615',
+      'https://www.facebook.com/pureohanatreasures',
       'https://x.com/pure_ohana_808',
     ],
   }
