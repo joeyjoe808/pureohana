@@ -60,7 +60,7 @@ export default function Footer() {
                 <Instagram size={24} />
               </a>
               <a
-                href="https://www.facebook.com/pureohanatreasures/"
+                href="https://www.facebook.com/profile.php?id=61584106241615"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-cream-300 hover:text-cream-50 transition-colors p-3 min-w-[48px] min-h-[48px] flex items-center justify-center"
