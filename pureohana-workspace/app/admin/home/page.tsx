@@ -5,8 +5,19 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Heading } from '@/components/ui/Heading'
 import { Container } from '@/components/ui/Container'
-import { ArrowLeft, Save, AlertCircle, CheckCircle } from 'lucide-react'
+import { ArrowLeft, Save, AlertCircle, CheckCircle, Plus, Trash2, GripVertical, Video } from 'lucide-react'
 import Link from 'next/link'
+
+interface VideoItem {
+  id: string
+  youtube_url: string
+  title: string
+  video_type: string
+  display_order: number
+  is_active: boolean
+}
+
+const VIDEO_TYPES = ['Highlight reel', 'Short feature', 'Full film', 'Teaser', 'Same day edit']
 
 export default function EditHomePage() {
   const router = useRouter()
@@ -15,6 +26,8 @@ export default function EditHomePage() {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [homeId, setHomeId] = useState<string | null>(null)
+  const [videos, setVideos] = useState<VideoItem[]>([])
+  const [savingVideos, setSavingVideos] = useState(false)
 
   const [formData, setFormData] = useState({
     hero_title: 'PURE OHANA TREASURES',
@@ -76,11 +89,103 @@ export default function EditHomePage() {
         })
       }
 
+      // Fetch homepage videos
+      const { data: videosData } = await supabase
+        .from('homepage_videos')
+        .select('*')
+        .eq('photographer_id', user.id)
+        .order('display_order', { ascending: true })
+
+      if (videosData) {
+        setVideos(videosData)
+      }
+
       setLoading(false)
     } catch (err: any) {
       console.error('Error loading homepage content:', err)
       setError(err.message || 'Failed to load content')
       setLoading(false)
+    }
+  }
+
+  // Video management functions
+  const addVideo = () => {
+    const newVideo: VideoItem = {
+      id: `temp-${Date.now()}`,
+      youtube_url: '',
+      title: '',
+      video_type: 'Highlight reel',
+      display_order: videos.length,
+      is_active: true,
+    }
+    setVideos([...videos, newVideo])
+  }
+
+  const updateVideo = (index: number, field: keyof VideoItem, value: string | boolean | number) => {
+    const updated = [...videos]
+    updated[index] = { ...updated[index], [field]: value }
+    setVideos(updated)
+  }
+
+  const removeVideo = (index: number) => {
+    const updated = videos.filter((_, i) => i !== index)
+    // Update display order
+    updated.forEach((v, i) => v.display_order = i)
+    setVideos(updated)
+  }
+
+  const saveVideos = async () => {
+    setSavingVideos(true)
+    setError(null)
+
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) throw new Error('You must be logged in')
+
+      // Delete all existing videos for this user
+      await supabase
+        .from('homepage_videos')
+        .delete()
+        .eq('photographer_id', user.id)
+
+      // Insert all current videos (filter out empty ones)
+      const videosToSave = videos
+        .filter(v => v.youtube_url && v.title)
+        .map((v, index) => ({
+          photographer_id: user.id,
+          youtube_url: v.youtube_url,
+          title: v.title,
+          video_type: v.video_type,
+          display_order: index,
+          is_active: v.is_active,
+        }))
+
+      if (videosToSave.length > 0) {
+        const { error: insertError } = await supabase
+          .from('homepage_videos')
+          .insert(videosToSave)
+
+        if (insertError) throw insertError
+      }
+
+      // Reload to get proper IDs
+      const { data: newVideos } = await supabase
+        .from('homepage_videos')
+        .select('*')
+        .eq('photographer_id', user.id)
+        .order('display_order', { ascending: true })
+
+      if (newVideos) setVideos(newVideos)
+
+      setSuccess(true)
+      setTimeout(() => setSuccess(false), 3000)
+    } catch (err: any) {
+      console.error('Error saving videos:', err)
+      setError(err.message || 'Failed to save videos')
+    } finally {
+      setSavingVideos(false)
     }
   }
 
@@ -426,6 +531,125 @@ export default function EditHomePage() {
                 />
               </div>
             </div>
+          </div>
+
+          {/* Video Gallery Section */}
+          <div className="bg-white rounded-luxury shadow-luxury p-8">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <Video size={24} className="text-sunset-600" />
+                <h3 className="font-display text-xl text-charcoal-900">Wedding Video Samples</h3>
+              </div>
+              <button
+                type="button"
+                onClick={addVideo}
+                className="inline-flex items-center gap-2 bg-sunset-600 text-white px-4 py-2 rounded-luxury font-serif text-sm hover:bg-sunset-700 transition-colors"
+              >
+                <Plus size={18} />
+                Add Video
+              </button>
+            </div>
+
+            <p className="font-serif text-sm text-charcoal-600 mb-6">
+              Add up to 4 YouTube videos to showcase on your homepage. Paste the YouTube URL and add a title.
+            </p>
+
+            {videos.length === 0 ? (
+              <div className="text-center py-8 border-2 border-dashed border-charcoal-200 rounded-luxury">
+                <Video size={40} className="mx-auto text-charcoal-300 mb-3" />
+                <p className="font-serif text-charcoal-500">No videos added yet</p>
+                <p className="font-serif text-sm text-charcoal-400 mt-1">Click "Add Video" to get started</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {videos.map((video, index) => (
+                  <div key={video.id} className="p-4 bg-cream-50 rounded-luxury border border-charcoal-200">
+                    <div className="flex items-start gap-3">
+                      <div className="text-charcoal-400 mt-2">
+                        <GripVertical size={20} />
+                      </div>
+                      <div className="flex-1 space-y-3">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block font-serif text-xs font-medium text-charcoal-700 mb-1">
+                              YouTube URL
+                            </label>
+                            <input
+                              type="url"
+                              value={video.youtube_url}
+                              onChange={(e) => updateVideo(index, 'youtube_url', e.target.value)}
+                              placeholder="https://www.youtube.com/watch?v=..."
+                              className="w-full px-3 py-2 border border-charcoal-300 rounded-luxury font-serif text-sm focus:outline-none focus:ring-2 focus:ring-sunset-500"
+                            />
+                          </div>
+                          <div>
+                            <label className="block font-serif text-xs font-medium text-charcoal-700 mb-1">
+                              Video Title
+                            </label>
+                            <input
+                              type="text"
+                              value={video.title}
+                              onChange={(e) => updateVideo(index, 'title', e.target.value)}
+                              placeholder="Isaiah & Ashley | A Love Story"
+                              className="w-full px-3 py-2 border border-charcoal-300 rounded-luxury font-serif text-sm focus:outline-none focus:ring-2 focus:ring-sunset-500"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <div className="flex-1">
+                            <label className="block font-serif text-xs font-medium text-charcoal-700 mb-1">
+                              Video Type
+                            </label>
+                            <select
+                              value={video.video_type}
+                              onChange={(e) => updateVideo(index, 'video_type', e.target.value)}
+                              className="w-full px-3 py-2 border border-charcoal-300 rounded-luxury font-serif text-sm focus:outline-none focus:ring-2 focus:ring-sunset-500 bg-white"
+                            >
+                              {VIDEO_TYPES.map((type) => (
+                                <option key={type} value={type}>{type}</option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="pt-5">
+                            <label className="inline-flex items-center gap-2 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={video.is_active}
+                                onChange={(e) => updateVideo(index, 'is_active', e.target.checked)}
+                                className="w-4 h-4 rounded border-charcoal-300 text-sunset-600 focus:ring-sunset-500"
+                              />
+                              <span className="font-serif text-sm text-charcoal-700">Active</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeVideo(index)}
+                        className="p-2 text-red-500 hover:bg-red-50 rounded-luxury transition-colors"
+                        title="Remove video"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {videos.length > 0 && (
+              <div className="mt-6 flex justify-end">
+                <button
+                  type="button"
+                  onClick={saveVideos}
+                  disabled={savingVideos}
+                  className="inline-flex items-center gap-2 bg-charcoal-800 text-white px-6 py-2 rounded-luxury font-serif hover:bg-charcoal-900 transition-colors disabled:opacity-50"
+                >
+                  <Save size={18} />
+                  {savingVideos ? 'Saving Videos...' : 'Save Videos'}
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Action Buttons */}

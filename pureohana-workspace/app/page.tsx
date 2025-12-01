@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
 import { Heading } from '@/components/ui/Heading'
 import { createServerClient } from '@/lib/supabase'
+import VideoGallery from '@/components/VideoGallery'
 
 export const metadata: Metadata = {
   title: 'Pure Ohana Treasures | Luxury Photography in Hawaii',
@@ -110,6 +111,17 @@ export default async function HomePage() {
   const gridImages = gridPhotosResults.map((photo, idx) =>
     photo || placeholderImages[idx]
   )
+
+  // Fetch homepage videos
+  const { data: videosData } = await supabase
+    .from('homepage_videos')
+    .select('*')
+    .eq('is_active', true)
+    .order('display_order', { ascending: true })
+    .limit(4)
+
+  const videos = videosData || []
+
   return (
     <main className="-mt-20">
       {/* HERO - Full screen, one stunning image, minimal text */}
@@ -172,6 +184,9 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* VIDEO GALLERY */}
+      {videos.length > 0 && <VideoGallery videos={videos} />}
 
       {/* ABOUT */}
       <section className="bg-white py-32">
