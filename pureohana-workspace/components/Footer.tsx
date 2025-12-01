@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Script from 'next/script'
 import { Instagram, Facebook, Twitter, Mail } from 'lucide-react'
 
 export default function Footer() {
@@ -78,6 +79,29 @@ export default function Footer() {
                 <Twitter size={24} />
               </a>
             </div>
+
+            {/* Featured On Badge */}
+            <div className="mt-6">
+              <h4 className="font-serif text-lg mb-3">Featured On</h4>
+              <a
+                href="https://www.zola.com/wedding-vendors/wedding-videographers/pure-ohana-treasures-llc?utm_source=vendor&utm_medium=various&utm_content=badge"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="https://d1tntvpcrzvon2.cloudfront.net/static-assets/images/badges/featured_on_zola_v3.png"
+                  alt="Featured on Zola"
+                  width={120}
+                  height={120}
+                  className="opacity-90 hover:opacity-100 transition-opacity"
+                />
+              </a>
+            </div>
+            <Script
+              id="zola-vendor-badge"
+              src="https://d1tntvpcrzvon2.cloudfront.net/static-assets/js/marketplace/zolaVendorBadge.js"
+              strategy="lazyOnload"
+            />
           </div>
         </div>
 
