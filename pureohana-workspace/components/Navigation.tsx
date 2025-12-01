@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Menu, X, Shield } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
@@ -41,13 +42,15 @@ export default function Navigation() {
     <nav className="fixed top-0 w-full bg-transparent backdrop-blur-sm z-[60]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <Link href="/" className="group flex items-baseline gap-2 transition-all drop-shadow-md">
-            <span className="font-display text-2xl text-white group-hover:text-cream-100 transition-colors [text-shadow:_0_2px_4px_rgb(0_0_0_/_80%)]">
-              Pure Ohana
-            </span>
-            <span className="font-darlington text-4xl text-sunset-400 group-hover:text-sunset-300 transition-colors leading-none tracking-widest [text-shadow:_0_2px_4px_rgb(0_0_0_/_80%)]">
-              Treasures
-            </span>
+          <Link href="/" className="group transition-all">
+            <Image
+              src="/logo.png"
+              alt="Pure Ohana Treasures"
+              width={180}
+              height={70}
+              className="h-16 w-auto drop-shadow-lg group-hover:scale-105 transition-transform"
+              priority
+            />
           </Link>
 
           <div className="hidden md:flex space-x-8 items-center">

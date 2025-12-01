@@ -42,6 +42,11 @@ const darlington = localFont({
 export const metadata: Metadata = {
   title: "Pure Ohana Treasures - Luxury Photography",
   description: "Capturing Life's Most Precious Moments with Luxury & Aloha",
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
