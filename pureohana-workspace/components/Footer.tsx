@@ -45,6 +45,16 @@ export default function Footer() {
                 <p>Serving all Hawaiian Islands</p>
               </li>
             </ul>
+            {/* Company Logo */}
+            <div className="mt-6">
+              <img
+                src="/logo.png"
+                alt="Pure Ohana Treasures Logo"
+                width={100}
+                height={100}
+                className="opacity-90"
+              />
+            </div>
           </div>
 
           {/* Social */}

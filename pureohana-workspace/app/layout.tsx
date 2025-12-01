@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Cormorant_Garamond, Inter, Allura } from "next/font/google";
+import { Playfair_Display, Cormorant_Garamond, Inter, Allura, Cinzel, Josefin_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
 import Navigation from "@/components/Navigation";
@@ -33,6 +33,20 @@ const allura = Allura({
   display: "swap",
 });
 
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cinzel",
+  display: "swap",
+});
+
+const josefinSans = Josefin_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-josefin",
+  display: "swap",
+});
+
 const darlington = localFont({
   src: "../public/fonts/ParadiseLove.ttf",
   variable: "--font-darlington",
@@ -43,8 +57,8 @@ export const metadata: Metadata = {
   title: "Pure Ohana Treasures - Luxury Photography",
   description: "Capturing Life's Most Precious Moments with Luxury & Aloha",
   icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
     apple: "/apple-touch-icon.png",
   },
 };
@@ -55,7 +69,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${cormorant.variable} ${inter.variable} ${allura.variable} ${darlington.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${cormorant.variable} ${inter.variable} ${allura.variable} ${cinzel.variable} ${josefinSans.variable} ${darlington.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
